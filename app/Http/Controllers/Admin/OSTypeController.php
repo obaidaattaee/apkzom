@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreOSTypeRequest;
+use App\Http\Requests\UpdateOSTypeRequest;
 use App\Models\OSType;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,15 +27,17 @@ class OSTypeController extends Controller
     {
         try {
             $file = $request->file('logoFile');
-            $logo = $request->has('logoFile') ? Storage::disk('uploads')->put(basename($file), $file) : "";
-            $request->merge(['logo' => $logo]);
+            $fileName = Storage::disk('uploads')->put(basename($file), $file);
+            $file = \Intervention\Image\Facades\Image::make($file)->resize(1000, 1000)->encode('jpg');
+            $logo = $request->input('on_server') ? Storage::disk('uploads')->put('1000*1000/' . $fileName, $file) : Storage::disk('b2')->put('uploads/1000*1000/' . $fileName, $file);
+            $request->merge(['logo' => $fileName]);
         } catch (\Exception $exception) {
             return redirect()->back()->with('message', __('common.cannot_upload_file'));
         }
-        OSType::create($request->only(['title', 'logo']));
+        $request['on_server'] = $request['on_server'] ? true : false;
+        OSType::create($request->only(['title', 'logo', 'on_server']));
         return redirect()->route('os-types.index')->with('message', __('common.created_successfully'));
     }
-
 
     public function destroy(OSType $type)
     {
@@ -47,16 +50,23 @@ class OSTypeController extends Controller
         return view('admin.os_types.edit')->with('type', $osType);
     }
 
-    public function update(StoreOSTypeRequest $request, OSType $osType)
+    public function update(UpdateOSTypeRequest $request, OSType $osType)
     {
-        try {
-            $file = $request->file('logoFile');
-            $logo = $request->has('logoFile') ? Storage::disk('uploads')->put(basename($file), $file) : "";
-            $request->merge(['logo' => $logo]);
-        } catch (\Exception $exception) {
-            return redirect()->back()->with('message', __('common.cannot_upload_file'));
+        $request['on_server'] = $request['on_server'] ? true : false;
+        if ($request->has('logoFile')) {
+            try {
+                $file = $request->file('logoFile');
+                $fileName = Storage::disk('uploads')->put(basename($file), $file);
+                $file = \Intervention\Image\Facades\Image::make($file)->resize(1000, 1000)->encode('jpg');
+                $logo = $request->input('on_server') ? Storage::disk('uploads')->put('1000*1000/' . $fileName, $file) : Storage::disk('b2')->put('uploads/1000*1000/' . $fileName, $file);
+                $request->merge(['logo' => $fileName]);
+            } catch (\Exception $exception) {
+                return redirect()->back()->with('message', __('common.cannot_upload_file'));
+            }
+        } else {
+            $request['on_server'] = $osType->on_server;
         }
-
+        $request['is_active'] = $request['is_active'] ? true : false;
         $osType->update($request->except('logoFile'));
         return redirect()->route('os-types.index')->with('message', __('common.update_successfully'));
     }
@@ -73,7 +83,7 @@ class OSTypeController extends Controller
                 return $query;
             });
         }
-        $types = $types->get(['id' ,'title']);
+        $types = $types->get(['id', 'title']);
         return \response()->json(json_decode($types));
     }
 }

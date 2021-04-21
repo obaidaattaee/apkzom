@@ -67,6 +67,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a href="{{ route('vendors.index') }}" class="nav-link @if(request()->is('admin/vendors/*')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('common.vendor') }}</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a href="{{ route('sliders.index') }}" class="nav-link @if(request()->is('admin/sliders/*')) active @endif">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>{{ __('common.sliders') }}</p>

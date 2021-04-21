@@ -43,9 +43,7 @@
                                     @foreach($tags as $tag)
                                         <tr>
                                             <td>{{ $tag->id }}</td>
-                                            <td>{{ $tag->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $tag->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}</td>
+                                            <td>{{ $tag->translation('title' , app()->getLocale()) }}</td>
                                             <td>{{ $tag->description }}</td>
                                             <td>
                                                 <div

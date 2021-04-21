@@ -43,12 +43,10 @@
                                     @foreach($osTypes as $type)
                                         <tr>
                                             <td>{{ $type->id }}</td>
-                                            <td>{{ $type->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $type->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}
+                                            <td>{{ $type->translation('title' , app()->getLocale())}}
                                             </td>
                                             <td>
-                                                <img src="{{ asset('uploads/' . $type->logo) }}" alt="{{ $type->title }}" class="img-fluid img-circle" style="max-width: 200px">
+                                                <img src="{{ $type->image }}" alt="{{ $type->translation('title' , app()->getLocale()) }}" class="img-fluid img-circle" style="max-width: 100px">
                                             </td>
                                             <td>
                                                 <div

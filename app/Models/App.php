@@ -48,6 +48,20 @@ class App extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id', 'id');
+        return $this->belongsTo(Vendor::class, 'owner_id', 'id');
+    }
+
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'description'
+            ]
+        ];
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'description';
     }
 }

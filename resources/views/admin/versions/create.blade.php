@@ -5,10 +5,11 @@
 
 @section('header-css')
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/select2/css/select2.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
+    <link rel="stylesheet"
+          href="{{ asset('bower_components/admin-lte/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css') }}">
 @endsection
 @section('content')
-{{--    @include('layouts.admin_components.message')--}}
+    {{--    @include('layouts.admin_components.message')--}}
     <div class="container-fluid">
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
@@ -20,11 +21,13 @@
                         <div class="form-group col-md-6">
                             <label for="title">{{__('common.os_type') }}</label>
                             <select name="os_type_id" id="os_type_id" class="form-control">
-                                <option value="" selected disabled>{{ __('common.select') . ' ' . __('common.os_types') }}</option>
+                                <option value="" selected
+                                        disabled>{{ __('common.select') . ' ' . __('common.os_types') }}</option>
                                 @foreach($types as $type)
-                                    <option value="{{ $type->id }}" {{ old('os_type_id') == $type->id ? "selected" : ""}}>{{ $type->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $type->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}</option>
+                                    <option
+                                        value="{{ $type->id }}" {{ old('os_type_id') == $type->id ? "selected" : ""}}>
+                                        {{ $type->translation('title' , app()->getLocale() )}}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('os_type_id')
@@ -33,7 +36,8 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="title">{{__('common.os_version') }}</label>
-                            <input type="text" name="version" value="{{ old('version') }}" id="version" class="form-control" placeholder="{{__('common.os_version') }}">
+                            <input type="text" name="version" value="{{ old('version') }}" id="version"
+                                   class="form-control" placeholder="{{__('common.os_version') }}">
                             @error('version')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror

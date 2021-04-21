@@ -18,9 +18,7 @@
                             <select name="os_type_id" id="os_type_id" class="form-control">
                                 <option value="" selected disabled>{{ __('common.select') . ' ' . __('common.os_types') }}</option>
                                 @foreach($types as $type)
-                                    <option value="{{ $type->id }}" {{ old('os_type_id') == $type->id || $version->os_type_id == $type->id ? "selected" : ""}}>{{ $type->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $type->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}</option>
+                                    <option value="{{ $type->id }}" {{ old('os_type_id') == $type->id || $version->os_type_id == $type->id ? "selected" : ""}}>{{ $type->translation('title' , app()->getLocale()) }}</option>
                                 @endforeach
                             </select>
                             @error('os_type_id')

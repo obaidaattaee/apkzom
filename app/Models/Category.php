@@ -2,35 +2,47 @@
 
 namespace App\Models;
 
+use App\Traits\TranslationTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Spatie\Translatable\HasTranslations;
 
+/**
+ * Class Category
+ * @package App\Models
+ */
 class Category extends Model
 {
     use SoftDeletes;
-    use HasTranslations;
-    protected $guarded = [];
+    use TranslationTrait;
 
-    protected $casts = [
-        'is_active' => 'boolean',
-        'title' => 'object'
-    ];
-
-    public $translatable = ['title'];
-
+    /**
+     *
+     */
     const CATEGORIES = [
         [
-            'id' => 1 ,
+            'id' => 1,
             'title' => '{"ar":"\u0627\u0644\u0639\u0627\u0628","en":"games"}',
             'description' => 'game category',
             'icon' => "fas fa-gamepad"
-        ],[
-            'id' => 2 ,
+        ], [
+            'id' => 2,
             'title' => '{"ar":"\u062a\u0637\u0628\u064a\u0642\u0627\u062a","en":"apps"}',
             'description' => 'app category',
             'icon' => "fab fa-app-store-ios"
         ]
+    ];
+
+    /**
+     * @var array
+     */
+    protected $guarded = [];
+
+    /**
+     * @var string[]
+     */
+    protected $casts = [
+        'is_active' => 'boolean',
+        'title' => 'array',
     ];
 
 }

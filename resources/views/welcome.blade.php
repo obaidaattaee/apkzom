@@ -20,8 +20,8 @@
                                 <div class="carousel-inner">
                                     @foreach($sliders as $key => $slider)
                                         <div class="item {{ $key == 0 ? "active" : "" }}">
-                                            <img src="{{ asset('uploads/' . $slider->image) }}" alt="img"
-                                                 class="img-responsive center-all">
+                                            <img src="{{  $slider->image_file }}" alt="{{ $slider->translation('image_alt' , app()->getLocale()) }}"
+                                            title="{{ $slider->translation('image_title' , app()->getLocale()) }}"     class="img-responsive center-all">
                                         </div>
                                     @endforeach
                                 </div>
@@ -59,9 +59,7 @@
                                                             alt="img"/>
                                                     </div>
                                                     <div class="col-md-6 col-sm-6 col-xs-6 clr-left">
-                                                        <h4 class="p-head">{{ $game->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $game->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation')  }}</h4>
+                                                        <h4 class="p-head">{{ $game->translation('title' , app()->getLocale())}}</h4>
                                                         <div class="ratings">
                                                             <i class="fa fa-star"></i>
                                                             <i class="fa fa-star"></i>
@@ -114,9 +112,7 @@
                                                                     alt="img"/>
                                                             </div>
                                                             <div class="col-md-6 col-sm-6 col-xs-6 clr-left">
-                                                                <h4 class="p-head">{{ $game->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $game->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation')  }}</h4>
+                                                                <h4 class="p-head">{{ $game->translation('title' , app()->getLocale() )}}</h4>
                                                                 <div class="ratings">
                                                                     <i class="fa fa-star"></i>
                                                                     <i class="fa fa-star"></i>
@@ -150,9 +146,7 @@
                                                                     alt="img"/>
                                                             </div>
                                                             <div class="col-md-6 col-sm-6 col-xs-6 clr-left">
-                                                                <h4 class="p-head">{{ $app->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $app->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation')  }}</h4>
+                                                                <h4 class="p-head">{{ $app->translation('title' , app()->getLocale()) }}</h4>
                                                                 <div class="ratings">
                                                                     <i class="fa fa-star"></i>
                                                                     <i class="fa fa-star"></i>
@@ -544,9 +538,7 @@
                                                     <a href="">
                                                         <i class="{{ $category->icon }}"></i>
                                                         <span>
-                                                        {{ $category->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $category->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}
+                                                        {{ $category->translation('title' , app()->getLocale()) }}
                                                     </span>
                                                     </a>
                                                 </p>

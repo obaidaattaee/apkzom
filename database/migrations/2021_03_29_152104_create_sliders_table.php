@@ -16,6 +16,9 @@ class CreateSlidersTable extends Migration
         Schema::create('sliders', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('image');
+            $table->json('image_title');
+            $table->json('image_alt');
+            $table->boolean('on_server')->default(false);
             $table->boolean('is_active')->default(true);
             $table->unsignedBigInteger('created_by')->default(1);
             $table->softDeletes();

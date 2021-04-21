@@ -47,7 +47,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <!-- Notifications Dropdown Menu -->
             <li class="nav-item dropdown">
                 <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-                    {{ __('common.lang') }}
+                    {{ app() ->getLocale()}}
                 </a>
                 <div class="dropdown-menu dropdown-menu-lg {{$direction == "rtl" ? '' : 'dropdown-menu-right'}}"
                      @if(!$direction == "rtl")  style="left: inherit; right: 0px;" @endif>

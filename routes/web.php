@@ -17,8 +17,9 @@ use App\Http\Controllers\Admin\OSTypeController;
 use App\Http\Controllers\Admin\OSVersionController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\VendorsController;
+use App\Http\Controllers\Site\SiteController;
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\Site\SiteController;
 
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
@@ -30,6 +31,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->group(function () {
 
         Route::get('users/json', [UserController::class, 'users'])->name('users.json');
+        Route::get('vendors/json', [VendorsController::class, 'vendors'])->name('vendors.json');
         Route::get('roles/json', [UserController::class, 'roles'])->name('roles');
         Route::get('category/json', [CategoryController::class, 'categories'])->name('category');
         Route::get('tags/json', [TagController::class, 'tags'])->name('tags');
@@ -44,5 +46,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::resource('sliders', 'SliderController');
         Route::resource('versions', 'OSVersionController');
         Route::resource('apps', 'AppController');
+        Route::resource('vendors', 'VendorsController');
     });
 });

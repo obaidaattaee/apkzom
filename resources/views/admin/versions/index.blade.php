@@ -40,9 +40,7 @@
                                     @foreach($versions as $version)
                                         <tr>
                                             <td>{{ $version->id }}</td>
-                                            <td>{{ object_get($version , 'type')->getTranslation('title' , app()->getLocale() , false) ?
-                                                        object_get($version , 'type')->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}
+                                            <td>{{ object_get($version , 'type')->translation('title' , app()->getLocale()) }}
                                             </td>
                                             <td>
                                                 <div

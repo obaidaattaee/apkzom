@@ -29,10 +29,6 @@
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                        @endforeach
-                    </div>
-                    <div class="row">
-                        @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <div class="form-group col-md-6">
                                 <label for="title">{{__('common.description') }} ( {{  $properties['native'] }}
                                     )</label>
@@ -45,6 +41,7 @@
                             </div>
                         @endforeach
                     </div>
+                    
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="extention">{{ __('common.extension') }}</label>
@@ -276,15 +273,15 @@
         $('#owner_id').select2({
             placeholder: "{{ __('common.select') . ' ' . __('common.owner') }}",
             ajax: {
-                url: '{{route('users.json')}}',
+                url: '{{route('vendors.json')}}',
                 dataType: 'json',
                 data: function (params) {
-                    return {type: params.term}
+                    return {vendor: params.term}
                 },
                 delay: 250,
                 processResults: function (data) {
                     return {
-                        results: $.map(data.data, function (item) {
+                        results: $.map(data, function (item) {
                             return {
                                 text: item.name,
                                 id: item.id

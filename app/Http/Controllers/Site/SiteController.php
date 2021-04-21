@@ -17,10 +17,10 @@ class SiteController extends Controller
 
     public function index () {
         Cache::forget('sliders');
-//        Cache::forget('categories');
-//        Cache::forget('tags');
-//        Cache::forget('games');
-//        Cache::forget('apps');
+        Cache::forget('categories');
+        Cache::forget('tags');
+        Cache::forget('games');
+        Cache::forget('apps');
         $sliders = Cache::remember('sliders' , 3600 ,function () {
             return Slider::where('is_active' , true)->get();
         });

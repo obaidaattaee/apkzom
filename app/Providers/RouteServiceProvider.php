@@ -33,6 +33,13 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
+
+        $locale = request()->segment(1);
+
+        Route::bind('apps', function ($slug) use ($locale) {
+            return \App\Post::where('slug->' . $locale, $slug)->first() ?? abort(404);
+        });
+
     }
 
     /**
@@ -59,8 +66,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapWebRoutes()
     {
         Route::middleware('web')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/web.php'));
+            ->namespace($this->namespace)
+            ->group(base_path('routes/web.php'));
     }
 
     /**
@@ -73,8 +80,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function mapApiRoutes()
     {
         Route::prefix('api')
-             ->middleware('api')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/api.php'));
+            ->middleware('api')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/api.php'));
     }
 }

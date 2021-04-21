@@ -21,7 +21,6 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $category = Category::create($request->all());
-        $category->setTranslations('title', $request->input('title'));
         return redirect()->route('categories.index')->with('message', __('create_successfully'));
     }
 
