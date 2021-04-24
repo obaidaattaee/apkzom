@@ -19,26 +19,20 @@ class AppDataTable extends DataTable
         return datatables()
             ->eloquent($query)
             ->editColumn('title', function ($row) {
-                return $row->getTranslation('title', app()->getLocale(), false) ?
-                    $row->getTranslation('title', app()->getLocale(), false) :
-                    __('common.no_translation');
+                return $row->translation('title' , app()->getLocale());
             })
             ->editColumn('description', function ($row) {
-                return $row->getTranslation('description', app()->getLocale(), false) ?
-                    $row->getTranslation('description', app()->getLocale(), false) :
-                    __('common.no_translation');
+                return $row->translation('description' , app()->getLocale());
             })
-            ->editColumn('category', function ($row) {
-                return object_get($row, 'category.title');
+            ->editColumn('category_id', function ($row) {
+                return object_get($row, 'category')->translation('title' , app()->getLocale());
             })
-            ->editColumn('tags', function ($row) {
-                $tags = "";
-                foreach (object_get($row, 'tags') as $tag) {
-                    $tags = $tags . object_get($tag, 'title') . ' , ';
-                }
-                return $tags;
+            ->addColumn('tags', function ($row) {
+               return implode(' , ' , object_get($row , 'tags')->map(function($tag){
+                   return $tag->translation('title' , app()->getLocale());
+               })->toArray());
             })
-            ->editColumn('owner', function ($row) {
+            ->editColumn('owner_id', function ($row) {
                 return object_get($row, 'owner.name');
             })
             ->addColumn('action', 'admin.apps.actions');
@@ -86,14 +80,14 @@ class AppDataTable extends DataTable
     {
         return [
             'id',
-            'title',
-            'description',
-            'size',
-            'original_link',
-            'extension',
-            'category',
+//            'title',
+//            'description',
+//            'size',
+//            'original_link',
+//            'extension',
+            'category_id',
             'tags',
-            'owner',
+            'owner_id',
             'action',
         ];
     }

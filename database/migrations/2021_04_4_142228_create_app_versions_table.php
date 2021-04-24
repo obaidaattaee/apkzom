@@ -16,8 +16,9 @@ class CreateAppVersionsTable extends Migration
         Schema::create('app_versions', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('title');
-            $table->integer('version_number');
+            $table->string('version_number');
             $table->string('size')->nullable();
+            $table->dateTime('published_at');
             $table->unsignedBigInteger('app_id');
             $table->string('original_link');
             $table->string('extension');

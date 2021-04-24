@@ -14,41 +14,17 @@
         <!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
             <!-- /.card-header -->
-            <form action="{{ route('apps.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('app-versions.update' , ['app' => $app->id , 'app_version' => $appVersion->id]) }}" method="post" enctype="multipart/form-data">
                 <div class="card-body">
                     @csrf
-                    <div class="row">
-                        @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
-                            <div class="form-group col-md-6">
-                                <label for="title">{{__('common.title') }} ( {{  $properties['native'] }} )</label>
-                                <input type="text" class="form-control" id="title-{{ $localeCode }}"
-                                       name="app[{{$localeCode}}][title]"
-                                       value="{{old('app.'.$localeCode.'.title')}}"
-                                       placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
-                                @error('title.'.$localeCode)
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                            <div class="form-group col-md-6">
-                                <label for="title">{{__('common.description') }} ( {{  $properties['native'] }}
-                                    )</label>
-                                <textarea class="form-control" id="description-{{ $localeCode }}"
-                                          name="app[{{$localeCode}}][description]"
-                                          placeholder="{{__('common.description')}}  ( {{  $properties['native'] }} )">{{old('app.'.$localeCode.'.description')}}</textarea>
-                                @error('description.'.$localeCode)
-                                <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
-                        @endforeach
-                    </div>
-
+                    @method('PUT')
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="extention">{{ __('common.extension') }}</label>
-                            <input type="text" required name="extension" id="extension" class="form-control"
-                                   placeholder="{{ __('common.extension') }}"
-                                   value="{{ old('extension') }}">
-                            @error('extension')
+                            <label for="extention">{{ __('common.title') }}</label>
+                            <input type="text" required name="title" id="title" class="form-control"
+                                   placeholder="{{ __('common.title') }}"
+                                   value="{{ old('extension') ?? $appVersion->title }}">
+                            @error('title')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
@@ -56,7 +32,7 @@
                             <label for="published_at">{{ __('common.published_at') }}</label>
                             <input type="date" required name="published_at" id="published_at" class="form-control"
                                    placeholder="{{ __('common.published_at') }}"
-                                   value="{{ old('published_at') }}">
+                                   value="{{ old('published_at') ?? $appVersion->published_at->format('Y-m-d') }}">
                             @error('published_at')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -65,69 +41,51 @@
 
                     <div class="row">
                         <div class="form-group required col-md-6">
-                            <label for="category_id">{{ __('common.category') }}</label>
-                            <select class="form-control" name="category_id" id="category_id">
-
-                            </select>
-                            @error('category_id')
+                            <label for="category_id">{{ __('common.version_number') }}</label>
+                            <input type="text" required name="version_number" id="version_number" class="form-control"
+                                   placeholder="{{ __('common.version_number') }}"
+                                   value="{{ old('version_number') ?? $appVersion->version_number}}">
+                            @error('version_number')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="tags">{{ __('common.tags') }}</label>
-                            <select class="form-control" required multiple name="tags[]" id="tags">
-
-                            </select>
-                            @error('tags')
+                            <label for="tags">{{ __('common.original_link') }}</label>
+                            <input type="text" required name="original_link" id="original_link" class="form-control"
+                                   placeholder="{{ __('common.original_link') }}"
+                                   value="{{ old('original_link') ?? $appVersion->original_link }}">
+                            @error('original_link')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="os_type_id">{{ __('common.os_type') }}</label>
-                            <select required name="os_type_id" id="os_type_id" class="form-control">
-
-                            </select>
-                            @error('os_type_id')
+                            <label for="tags">{{ __('common.extension') }}</label>
+                            <input type="text" required name="extension" id="extension" class="form-control"
+                                   placeholder="{{ __('common.extension') }}"
+                                   value="{{ old('extension') ?? $appVersion->extension }}">
+                            @error('extension')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="os_version_id">{{ __('common.os_version') }}</label>
-                            <select required name="os_version_id" id="os_version_id" class="form-control">
-
-                            </select>
-                            @error('os_version_id')
+                            <label for="tags">{{ __('common.size') }}</label>
+                            <input type="text" required name="size" id="size" class="form-control"
+                                   placeholder="{{ __('common.size') }}"
+                                   value="{{ old('size') ?? $appVersion->size }}">
+                            @error('size')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label for="owner_id">{{ __('common.owner') }}</label>
-                            <select name="owner_id" required id="owner_id" class="form-control"></select>
-                            @error('os_type_id')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="title">{{__('common.file') }}</label>
-                            <input type="file" class="form-control" required id="customFile"
-                                   name="logoFile"
-                                   placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
-                            @error('logo')
+                            <label for="tags">{{ __('common.sort_position') }}</label>
+                            <input type="number" required name="sort_number" id="sort_number" class="form-control"
+                                   placeholder="{{ __('common.sort_position') }}"
+                                   value="{{ old('sort_number') ?? $appVersion->sort_number }}">
+                            @error('sort_number')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
-                        </div>
-                        <div class="form-group col-md-6 mt-4">
-                            <div class="custom-control custom-switch">
-                                <input type="checkbox" class="custom-control-input" name="on_server" id="customSwitch1">
-                                <label class="custom-control-label"
-                                       for="customSwitch1">{{ __('common.on_server') }}</label>
-                            </div>
                         </div>
                     </div>
                 </div>

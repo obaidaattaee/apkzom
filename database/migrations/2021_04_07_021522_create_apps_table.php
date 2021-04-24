@@ -18,6 +18,8 @@ class CreateAppsTable extends Migration
             $table->string('extension');
             $table->bigInteger('download_counter')->default(1);
             $table->date('published_at');
+            $table->string('image');
+            $table->boolean('on_server');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('owner_id');
             $table->unsignedInteger('category_id');

@@ -15,14 +15,17 @@ class CreateImagesTable extends Migration
     {
         Schema::create('images', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('path');
-            $table->json('title');
-            $table->json('description');
+            $table->string('image');
+            $table->json('image_title');
+            $table->json('image_alt');
+            $table->boolean('on_server');
+            $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('app_id');
             $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('app_id')->references('id')->on('apps');
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

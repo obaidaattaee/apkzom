@@ -86,13 +86,11 @@
                         </li>
                     </ul>
                 </li>
-                <li class="nav-item  @if(request()->is('admin/apps/*')) menu-open @endif">
+                <li class="nav-item  @if(request()->is('admin/apps/*') || request()->is('admin/apps') ) menu-open @endif">
                     <a href="#" class="nav-link">
                         <i class="fab fa-app-store"></i>
-                        <p>
                             {{ __('common.apps') }}
                             <i class="right fas fa-angle-left"></i>
-                        </p>
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
@@ -108,6 +106,12 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('languages.index') }}" class="nav-link @if(request()->is('languages/*') || request()->is('languages') ) active @endif">
+                        <i class="far fa-circle nav-icon"></i>
+                        <p>{{ __('common.languages') }}</p>
+                    </a>
                 </li>
             </ul>
         </nav>

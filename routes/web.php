@@ -47,5 +47,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::resource('versions', 'OSVersionController');
         Route::resource('apps', 'AppController');
         Route::resource('vendors', 'VendorsController');
+        Route::resource('apps/{app}/images', 'AppImageController');
+        Route::resource('apps/{app}/app-versions', 'AppVersionController');
     });
 });
