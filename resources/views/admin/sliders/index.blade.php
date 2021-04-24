@@ -6,8 +6,10 @@
     <div class="card-tools flex">
         <ul class="nav nav-pills ml-auto">
             <li class="nav-item">
-                <button class="nav-link active" data-toggle="modal"
-                        data-target="#modal-lg">{{ __('common.add_new') }}</button>
+                <a class="nav-link active"
+{{--                   data-toggle="modal"--}}
+{{--                        data-target="#modal-lg"--}}
+                href="{{ route('sliders.create') }}">{{ __('common.add_new') }}</a>
             </li>
         </ul>
     </div>
@@ -34,7 +36,6 @@
                                         {{ __('common.status') }}
                                     </th>
                                     <th>
-                                    <th>
                                         {{ __('common.actions') }}
                                     </th>
                                     </thead>
@@ -43,7 +44,7 @@
                                         <tr>
                                             <td>{{ $slider->id }}</td>
                                             <td>
-                                                <img src="{{ asset('uploads/' . $slider->image) }}" class="img-fluid"
+                                                <img src="{{ $slider->image_file }}" class="img-fluid"
                                                      style="max-width: 200px">
                                             </td>
                                             <td>
@@ -53,7 +54,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a data-toggle="modal" data-target="#modal-lg-{{$slider->id}}"
+                                                <a href="{{ route('sliders.edit' , ['slider' => $slider->id]) }}"
                                                    class="btn btn-info">
                                                     {{ __('common.edit') }}
                                                 </a>
@@ -153,7 +154,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Large Modal</h4>
+                    <h4 class="modal-title">{{ ucwords(__('common.new_slider')) }}</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>

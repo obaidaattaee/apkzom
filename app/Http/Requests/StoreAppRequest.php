@@ -24,23 +24,32 @@ class StoreAppRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => ['required'],
-            'title.*' => ['required' , 'string' ],
-            'description' => ['required'],
-            'description.*' => ['required' , 'string'],
+            'app.*.title' => ['required'],
+            'app.*.description' => ['required'],
             'extension' => ['required' , 'string'],
-            'original_link' => ['required' , 'active_url'],
+            'rate' => ['required' ],
             'published_at' => ['required' , 'date_format:Y-m-d'],
-            'size' => ['required' , 'string'],
             'category_id' => ['required' , 'exists:categories,id'],
             'tags' => ['required'],
-            'category.*' => ['required' , 'exists:tags,id'],
+            'tags.*' => ['required' , 'exists:tags,id'],
             'os_type_id' => ['required' , 'exists:o_s_types,id'],
             'os_version_id' => ['required' , 'exists:o_s_versions,id'],
             'owner_id' => ['required' , 'exists:users,id'],
-            'parts.*.size' => ['required' , 'string'],
-            'parts.*.original_link' => ['required' , 'active_url'],
-            'parts.*.extension' => ['required' , 'string'],
+            "version.title" => ['required'],
+            "version.published_at" => ['required'],
+            "version.version_number" => ['required'],
+            "version.original_link" => ['required'],
+            "version.extension" => ['required'],
+            "version.size" => ['required'],
+            "version.sort_number" => ['required'],
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'app.*.title' => __('common.title'),
+            'app.*.description' => __('common.description'),
         ];
     }
 }

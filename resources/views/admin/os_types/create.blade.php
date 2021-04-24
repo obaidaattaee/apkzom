@@ -33,6 +33,12 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+                        <div class="form-group col-md-6 mt-4">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="on_server" id="customSwitch1">
+                                <label class="custom-control-label" for="customSwitch1">{{ __('common.on_server') }}</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">

@@ -18,7 +18,7 @@
                                 <label for="title">{{__('common.title') }} ( {{  $properties['native'] }} )</label>
                                 <input type="text" class="form-control" required id="title"
                                        name="title[{{$localeCode}}]"
-                                       value="{{old('title.'.$localeCode) ?? $tag->getTranslation('title' , $localeCode , false)}}"
+                                       value="{{old('title.'.$localeCode) ?? $tag->translation('title' , $localeCode)}}"
                                        placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
                                 @error('title.'.$localeCode)
                                 <div class="text-danger">{{ $message }}</div>

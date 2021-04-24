@@ -17,13 +17,13 @@ class CreateAppPartsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('part_number');
             $table->string('size')->nullable();
-            $table->unsignedBigInteger('app_id');
+            $table->unsignedBigInteger('app_version_id');
             $table->string('original_link');
             $table->string('extension');
             $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('app_id')->references('id')->on('apps');
+            $table->foreign('app_version_id')->references('id')->on('apps');
         });
     }
 

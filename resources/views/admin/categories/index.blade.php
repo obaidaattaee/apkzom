@@ -46,9 +46,7 @@
                                     @foreach($categories as $category)
                                         <tr>
                                             <td>{{ $category->id }}</td>
-                                            <td>{{ $category->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $category->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}</td>
+                                            <td>{{ $category->translation('title' , app()->getLocale()) }}</td>
                                             <td>{{ $category->description }}</td>
                                             <td><i class="{{$category->icon}}"></i></td>
                                             <td>

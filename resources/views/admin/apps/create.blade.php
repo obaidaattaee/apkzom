@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
-@section('title' , __('common.add_new') . ' ' . __('common.os_version'))
-@section('page-title' , __('common.add_new') . ' ' . __('common.os_version'))
+@section('title' , __('common.add_new') . ' ' . __('common.app'))
+@section('page-title' , __('common.add_new') . ' ' . __('common.app'))
 
 @section('header-css')
     <link rel="stylesheet" href="{{ asset('bower_components/admin-lte/plugins/select2/css/select2.min.css') }}">
@@ -22,29 +22,26 @@
                             <div class="form-group col-md-6">
                                 <label for="title">{{__('common.title') }} ( {{  $properties['native'] }} )</label>
                                 <input type="text" class="form-control" id="title-{{ $localeCode }}"
-                                       name="title[{{$localeCode}}]"
-                                       value="{{old('title.'.$localeCode)}}"
+                                       name="app[{{$localeCode}}][title]"
+                                       value="{{old('app.'.$localeCode.'.title')}}"
                                        placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
                                 @error('title.'.$localeCode)
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
-                        @endforeach
-                    </div>
-                    <div class="row">
-                        @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
                             <div class="form-group col-md-6">
                                 <label for="title">{{__('common.description') }} ( {{  $properties['native'] }}
                                     )</label>
                                 <textarea class="form-control" id="description-{{ $localeCode }}"
-                                          name="description[{{$localeCode}}]"
-                                          placeholder="{{__('common.description')}}  ( {{  $properties['native'] }} )"> {{old('description.'.$localeCode)}} </textarea>
+                                          name="app[{{$localeCode}}][description]"
+                                          placeholder="{{__('common.description')}}  ( {{  $properties['native'] }} )">{{old('app.'.$localeCode.'.description')}}</textarea>
                                 @error('description.'.$localeCode)
                                 <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         @endforeach
                     </div>
+
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="extention">{{ __('common.extension') }}</label>
@@ -56,17 +53,6 @@
                             @enderror
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="original_link">{{ __('common.original_link') }}</label>
-                            <input type="url" required name="original_link" id="original_link" class="form-control"
-                                   placeholder="{{ __('common.original_link') }}"
-                                   value="{{ old('original_link') }}">
-                            @error('original_link')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
                             <label for="published_at">{{ __('common.published_at') }}</label>
                             <input type="date" required name="published_at" id="published_at" class="form-control"
                                    placeholder="{{ __('common.published_at') }}"
@@ -75,16 +61,8 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="size">{{ __('common.size') }}</label>
-                            <input type="text" required name="size" id="size" class="form-control"
-                                   placeholder="{{ __('common.size') }}"
-                                   value="{{ old('size') }}">
-                            @error('size')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
+
                     <div class="row">
                         <div class="form-group required col-md-6">
                             <label for="category_id">{{ __('common.category') }}</label>
@@ -126,71 +104,110 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="owner_id">{{ __('common.owner') }}</label>
                             <select name="owner_id" required id="owner_id" class="form-control"></select>
                             @error('os_type_id')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-12">
-                            <label for="os_type_id">{{ __('common.images') }}</label>
-                            <input type="file" required name="images[]" id="images" class="form-control" multiple>
+                        <div class="form-group col-md-6">
+                            <label for="owner_id">{{ __('common.rate') }}</label>
+                            <input type="number" class="form-control" id="rate" name="rate" max="5" required>
                             @error('os_type_id')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
-                    <hr class="list-seperator">
-                    <h4 class="font-weight-bolder">{{ __('common.parts') }}</h4>
-                    <div class="parts">
-                        <div data-repeater-list="parts">
-                            @foreach(old('parts' , [[  "size" => null,
-                                                      "original_link" => null,
-                                                      "extension" => null ,
-                                                      ]]) as $key => $part)
-                                <div data-repeater-item>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label for="part_size">{{  __('common.size') }}</label>
-                                            <input type="text" class="form-control" name="size" id="part-size" required
-                                                   placeholder="{{ __('common.size') }}" value="{{ $part['size'] }}"/>
-                                            @error('parts.' . $key . '.size')
-                                            <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="part_original_link">{{ __('common.original_link') }}</label>
-                                            <input type="url" class="form-control" name="original_link" required
-                                                   id="part_original_link"
-                                                   value="{{ $part['original_link'] }}"
-                                                   placeholder="{{ __('common.original_link') }}"/>
-                                            @error('parts.' . $key . '.original_link')
-                                            <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="part_extension">{{ __('common.extension') }}</label>
-                                            <input type="text" class="form-control" name="extension" id="part_extension"
-                                                   required
-                                                   value="{{ $part['extension'] }}"
-                                                   placeholder="{{ __('common.extension') }}"/>
-                                            @error('parts.' . $key . '.extension')
-                                            <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <input data-repeater-delete type="button" class="btn btn-danger float-right"
-                                                   value="Delete"/>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            @endforeach
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="title">{{__('common.file') }}</label>
+                            <input type="file" class="form-control" required id="customFile"
+                                   name="logoFile"
+                                   placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
+                            @error('logo')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <input data-repeater-create type="button" class="btn btn-success float-right" value="Add"/>
+                        <div class="form-group col-md-6 mt-4">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" name="on_server" id="customSwitch1">
+                                <label class="custom-control-label"
+                                       for="customSwitch1">{{ __('common.on_server') }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>{{ ucwords(__('common.version')) }}</h4>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="extention">{{ __('common.title') }}</label>
+                            <input type="text" required name="version[title]" id="title" class="form-control"
+                                   placeholder="{{ __('common.title') }}"
+                                   value="{{ old('version[extension]') }}">
+                            @error('version.title')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="published_at">{{ __('common.published_at') }}</label>
+                            <input type="date" required name="version[published_at]" id="published_at" class="form-control"
+                                   placeholder="{{ __('common.published_at') }}"
+                                   value="{{ old('version[published_at]') }}">
+                            @error('version.published_at')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group required col-md-6">
+                            <label for="category_id">{{ __('common.version_number') }}</label>
+                            <input type="text" required name="version[version_number]" id="version_number" class="form-control"
+                                   placeholder="{{ __('common.version_number') }}"
+                                   value="{{ old('version[version_number]') }}">
+                            @error('version.version_number')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.original_link') }}</label>
+                            <input type="url" required name="version[original_link]" id="original_link" class="form-control"
+                                   placeholder="{{ __('common.original_link') }}"
+                                   value="{{ old('version[original_link]') }}">
+                            @error('version.original_link')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.extension') }}</label>
+                            <input type="text" required name="version[extension]" id="extension" class="form-control"
+                                   placeholder="{{ __('common.extension') }}"
+                                   value="{{ old('version[extension]') }}">
+                            @error('version.extension')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.size') }}</label>
+                            <input type="text" required name="version[size]" id="size" class="form-control"
+                                   placeholder="{{ __('common.size') }}"
+                                   value="{{ old('version[size]') }}">
+                            @error('version.size')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.sort_position') }}</label>
+                            <input type="number" required name="version[sort_number]" id="sort_number" class="form-control"
+                                   placeholder="{{ __('common.sort_position') }}"
+                                   value="{{ old('version[sort_number]') }}">
+                            @error('version.sort_number')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
                 </div>
                 <div class="card-footer">
@@ -276,15 +293,15 @@
         $('#owner_id').select2({
             placeholder: "{{ __('common.select') . ' ' . __('common.owner') }}",
             ajax: {
-                url: '{{route('users.json')}}',
+                url: '{{route('vendors.json')}}',
                 dataType: 'json',
                 data: function (params) {
-                    return {type: params.term}
+                    return {vendor: params.term}
                 },
                 delay: 250,
                 processResults: function (data) {
                     return {
-                        results: $.map(data.data, function (item) {
+                        results: $.map(data, function (item) {
                             return {
                                 text: item.name,
                                 id: item.id

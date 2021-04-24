@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Translatable\HasTranslations;
@@ -16,15 +15,25 @@ class App extends Model
     use SoftDeletes;
     use HasTranslations;
 
+    const APP_LOGO_PATH = 'apps/logos';
     /**
      * @var string[]
      */
     public $translatable = ['title', 'description'];
-
+    protected $with = ['translations'];
     /**
      * @var array
      */
     protected $guarded = [];
+    protected $appends = ['image_file'];
+    protected $casts = ['published_at', 'datetime'];
+
+    public function getImageFileAttribute()
+    {
+        return $this->getAttribute('on_server') ?
+            asset('uploads/' . self::APP_LOGO_PATH . '/' . $this->getAttribute('image')) :
+            config()->get('backblaze.base_image_url') . 'uploads/' . self::APP_LOGO_PATH . '/' . $this->getAttribute('image');
+    }
 
     public function tags()
     {
@@ -48,6 +57,31 @@ class App extends Model
 
     public function owner()
     {
-        return $this->belongsTo(User::class, 'owner_id', 'id');
+        return $this->belongsTo(Vendor::class, 'owner_id', 'id');
+    }
+
+    public function OSType()
+    {
+        return $this->belongsTo(OSType::class, 'os_type_id', 'id');
+    }
+
+    public function OSVersion()
+    {
+        return $this->belongsTo(OSVersion::class, 'os_version_id', 'id');
+    }
+
+    public function versions()
+    {
+        return $this->hasMany(AppVersion::class, 'app_id', 'id')->orderBy('sort_number');
+    }
+
+    public function translation($column, $locale = 'en')
+    {
+        return $this->translations()->where(['locale' => $locale ])->first()->getAttribute($column);
+    }
+
+    public function translations()
+    {
+        return $this->hasMany(AppTranslation::class, 'app_id', 'id');
     }
 }

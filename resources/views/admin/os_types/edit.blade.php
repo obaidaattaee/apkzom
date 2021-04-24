@@ -12,103 +12,67 @@
     </div>
 @endsection
 @section('content')
-    <section class="content">
-        @include('layouts.admin_components.message')
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <div class="table-responsive">
-                                <table class="table" id="datatable">
-                                    <thead>
-                                    <th>
-                                        #
-                                    </th>
-                                    <th>
-                                        {{ __('common.title') }}
-                                    </th>
-                                    <th>
-                                        {{ __('common.logo') }}
-                                    </th>
-                                    <th>
-                                        {{ __('common.status') }}
-                                    </th>
-                                    <th>
-                                        {{ __('common.actions') }}
-                                    </th>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($osTypes as $type)
-                                        <tr>
-                                            <td>{{ $type->id }}</td>
-                                            <td>{{ $type->getTranslation('title' , app()->getLocale() , false) ?
-                                                        $type->getTranslation('title' , app()->getLocale() , false) :
-                                                         __('common.no_translation') }}
-                                            </td>
-                                            <td>
-                                                <img src="{{ asset('uploads/' . $type->logo) }}" alt="{{ $type->title }}" class="img-fluid img-circle" style="max-width: 200px">
-                                            </td>
-                                            <td>
-                                                <div
-                                                    class="btn btn-sm btn-{{ $type->is_active ? "success" : 'warning' }}">
-                                                    {{ $type->is_active ? __('common.active') : __('common.in_active') }}
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <a href="{{ route('os-types.edit' , $type->id) }}"
-                                                   class="btn btn-info">
-                                                    {{ __('common.edit') }}
-                                                </a>
-                                                <a onclick="deleteConfirmation({{$type->id}})"
-                                                   class="btn btn-danger">
-                                                    {{ __('common.destroy') }}
-                                                </a>
-                                                <form action="{{ route('tags.destroy' , $type->id) }}"
-                                                      class="deleted_form_{{$type->id}}" method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
+    @include('layouts.admin_components.message')
+    <div class="container-fluid">
+        <!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+            <!-- /.card-header -->
+            <form action="{{ route('os-types.update' , ['os_type' => $type->id]) }}" method="post"
+                  enctype="multipart/form-data">
+                <div class="card-body">
+                    @csrf
+                    @method('PUT')
+                    <div class="row">
+                        @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                            <div class="form-group col-md-6">
+                                <label for="title">{{__('common.title') }} ( {{  $properties['native'] }} )</label>
+                                <input type="text" class="form-control" required id="title-{{$localeCode}}"
+                                       name="title[{{$localeCode}}]"
+                                       value="{{old('title.'.$localeCode) ?? $type->translation('title' , $localeCode)}}"
+                                       placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
+                                @error('title.'.$localeCode)
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        @endforeach
+                        <div class="form-group col-md-6">
+                            <label for="title">{{__('common.file') }}</label>
+                            <input type="file" class="form-control" id="customFile"
+                                   name="logoFile"
+                                   placeholder="{{__('common.title')}}  ( {{  $properties['native'] }} )"/>
+                            @error('logo')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="title">{{__('common.old_file') }}</label>
+                            <br>
+                            <img src="{{ $type->image }}" alt="" style="width: 100px">
+                        </div>
+                        <div class="form-group col-md-6 mt-4">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input"
+                                       {{ $type->on_server ? 'checked' : "" }} name="on_server" id="customSwitch1">
+                                <label class="custom-control-label"
+                                       for="customSwitch1">{{ __('common.on_server') }}</label>
                             </div>
                         </div>
-                        <!-- /.card-body -->
+                        <div class="form-group col-md-6 mt-4">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input"
+                                       {{ $type->is_active ? 'checked' : "" }} name="is_active" id="is_active">
+                                <label class="custom-control-label"
+                                       for="is_active">{{ __('common.is_active') }}</label>
+                            </div>
+                        </div>
                     </div>
-                    <!-- /.card -->
                 </div>
-            </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-outline-success">{{ __('common.save') }}</button>
+                    <a href="{{ route('os-types.index') }}" class="btn btn-outline-danger">{{ __('common.cancel') }}</a>
+                </div>
+            </form>
         </div>
-    </section>
-@endsection
-@section('footer-js')
-    <script src="{{ asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.all.js') }}"></script>
-    <script src="{{ asset('bower_components/admin-lte/plugins/sweetalert2/sweetalert2.js')}}"></script>
-
-    <script>
-        function deleteConfirmation(id) {
-            Swal.fire({
-                title: "{{__('common.are_you_sure')}}?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "{{__('common.yes')}}, {{__('common.delete_it')}}!",
-                cancelButtonText: "{{__('common.no')}}, {{__('common.cancel')}}!",
-                reverseButtons: true
-            }).then(function (result) {
-                if (result.value) {
-                    $('.deleted_form_' + id).submit();
-                } else if (result.dismiss === "cancel") {
-                    Swal.fire(
-                        "{{__('common.cancelled')}}",
-                        "{{__('common.cancelled')}}",
-                        "error"
-                    )
-                }
-            });
-        }
-    </script>
+        <!-- /.card -->
+    </div>
 @endsection

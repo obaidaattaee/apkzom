@@ -17,6 +17,7 @@ class CreateOSTypesTable extends Migration
             $table->increments('id');
             $table->json('title');
             $table->string('logo');
+            $table->boolean('on_server')->default(false);
             $table->unsignedBigInteger('created_by');
             $table->boolean('is_active')->default(true);
             $table->softDeletes();
