@@ -12,9 +12,11 @@
 */
 
 use App\Http\Controllers\Admin\AdminBaseController;
+use App\Http\Controllers\Admin\AppController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OSTypeController;
 use App\Http\Controllers\Admin\OSVersionController;
+use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VendorsController;
@@ -24,19 +26,24 @@ use Illuminate\Support\Facades\Route;
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
     Route::get('/', [SiteController::class, 'index']);
-
+    Route::get('search', [SiteController::class, 'search'])->name('search');
+    Route::get('download/{app}/{title?}', [SiteController::class, 'download'])->name('download');
     Auth::routes();
 
     Route::get('/home', 'HomeController@index')->name('home');
     Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->group(function () {
 
         Route::get('users/json', [UserController::class, 'users'])->name('users.json');
+        Route::get('apps/json', [AppController::class, 'apps'])->name('apps.json');
         Route::get('vendors/json', [VendorsController::class, 'vendors'])->name('vendors.json');
         Route::get('roles/json', [UserController::class, 'roles'])->name('roles');
         Route::get('category/json', [CategoryController::class, 'categories'])->name('category');
         Route::get('tags/json', [TagController::class, 'tags'])->name('tags');
         Route::get('os_versions/json', [OSVersionController::class, 'versions'])->name('os_versions');
         Route::get('os-types/search', [OSTypeController::class, 'search'])->name('os_types.search');
+        Route::get('sections/', [SectionController::class, 'index'])->name('sections.index');
+        Route::get('sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
+        Route::put('sections/{section}/edit', [SectionController::class, 'update'])->name('sections.update');
 
         Route::get('/', [AdminBaseController::class, 'index']);
         Route::resource('users', 'UserController');

@@ -15,7 +15,12 @@ class CreateAppSectionTable extends Migration
     {
         Schema::create('app_section', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedInteger('section_id');
+            $table->unsignedBigInteger('app_id');
             $table->timestamps();
+
+            $table->foreign('section_id')->references('id')->on('sections');
+            $table->foreign('app_id')->references('id')->on('apps');
         });
     }
 

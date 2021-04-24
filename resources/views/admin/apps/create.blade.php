@@ -104,9 +104,16 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-12">
+                        <div class="form-group col-md-6">
                             <label for="owner_id">{{ __('common.owner') }}</label>
                             <select name="owner_id" required id="owner_id" class="form-control"></select>
+                            @error('os_type_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="owner_id">{{ __('common.rate') }}</label>
+                            <input type="number" class="form-control" id="rate" name="rate" max="5" required>
                             @error('os_type_id')
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
@@ -128,6 +135,78 @@
                                 <label class="custom-control-label"
                                        for="customSwitch1">{{ __('common.on_server') }}</label>
                             </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <h4>{{ ucwords(__('common.version')) }}</h4>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="extention">{{ __('common.title') }}</label>
+                            <input type="text" required name="version[title]" id="title" class="form-control"
+                                   placeholder="{{ __('common.title') }}"
+                                   value="{{ old('version[extension]') }}">
+                            @error('version.title')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="published_at">{{ __('common.published_at') }}</label>
+                            <input type="date" required name="version[published_at]" id="published_at" class="form-control"
+                                   placeholder="{{ __('common.published_at') }}"
+                                   value="{{ old('version[published_at]') }}">
+                            @error('version.published_at')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group required col-md-6">
+                            <label for="category_id">{{ __('common.version_number') }}</label>
+                            <input type="text" required name="version[version_number]" id="version_number" class="form-control"
+                                   placeholder="{{ __('common.version_number') }}"
+                                   value="{{ old('version[version_number]') }}">
+                            @error('version.version_number')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.original_link') }}</label>
+                            <input type="url" required name="version[original_link]" id="original_link" class="form-control"
+                                   placeholder="{{ __('common.original_link') }}"
+                                   value="{{ old('version[original_link]') }}">
+                            @error('version.original_link')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.extension') }}</label>
+                            <input type="text" required name="version[extension]" id="extension" class="form-control"
+                                   placeholder="{{ __('common.extension') }}"
+                                   value="{{ old('version[extension]') }}">
+                            @error('version.extension')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.size') }}</label>
+                            <input type="text" required name="version[size]" id="size" class="form-control"
+                                   placeholder="{{ __('common.size') }}"
+                                   value="{{ old('version[size]') }}">
+                            @error('version.size')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.sort_position') }}</label>
+                            <input type="number" required name="version[sort_number]" id="sort_number" class="form-control"
+                                   placeholder="{{ __('common.sort_position') }}"
+                                   value="{{ old('version[sort_number]') }}">
+                            @error('version.sort_number')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
                         </div>
                     </div>
                 </div>

@@ -27,6 +27,7 @@ class StoreAppRequest extends FormRequest
             'app.*.title' => ['required'],
             'app.*.description' => ['required'],
             'extension' => ['required' , 'string'],
+            'rate' => ['required' ],
             'published_at' => ['required' , 'date_format:Y-m-d'],
             'category_id' => ['required' , 'exists:categories,id'],
             'tags' => ['required'],
@@ -34,6 +35,13 @@ class StoreAppRequest extends FormRequest
             'os_type_id' => ['required' , 'exists:o_s_types,id'],
             'os_version_id' => ['required' , 'exists:o_s_versions,id'],
             'owner_id' => ['required' , 'exists:users,id'],
+            "version.title" => ['required'],
+            "version.published_at" => ['required'],
+            "version.version_number" => ['required'],
+            "version.original_link" => ['required'],
+            "version.extension" => ['required'],
+            "version.size" => ['required'],
+            "version.sort_number" => ['required'],
         ];
     }
 

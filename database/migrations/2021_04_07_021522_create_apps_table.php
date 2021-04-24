@@ -20,6 +20,7 @@ class CreateAppsTable extends Migration
             $table->date('published_at');
             $table->string('image');
             $table->boolean('on_server');
+            $table->integer('rate');
             $table->unsignedBigInteger('created_by');
             $table->unsignedBigInteger('owner_id');
             $table->unsignedInteger('category_id');

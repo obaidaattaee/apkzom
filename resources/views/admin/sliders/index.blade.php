@@ -36,7 +36,6 @@
                                         {{ __('common.status') }}
                                     </th>
                                     <th>
-                                    <th>
                                         {{ __('common.actions') }}
                                     </th>
                                     </thead>

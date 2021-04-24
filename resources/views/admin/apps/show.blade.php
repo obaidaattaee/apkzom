@@ -6,11 +6,15 @@
     <link rel="stylesheet" href="cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <div class="card-tools flex">
         <ul class="nav nav-pills ml-auto">
-            <li class="nav-item">
+            <li class="nav-item mx-1">
+                <a class="nav-link active"
+                   href="{{ route('apps.edit' , ['app' => $app->id]) }}">{{ __('common.edit')  }}</a>
+            </li>
+            <li class="nav-item mx-1">
                 <a class="nav-link active"
                    href="{{ route('apps.create') }}">{{ __('common.new') . ' ' . __('common.app') }}</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item mx-1">
                 <a onclick="deleteConfirmation({{$app->id}})" class="nav-link active btn-danger ">
                     {{ __('common.delete') }}
                 </a>
@@ -25,6 +29,7 @@
 @section('content')
     <section class="content">
         <div class="container-fluid">
+            @include('layouts.admin_components.message')
             <div class="row">
                 <div class="col-md-3">
 
@@ -36,7 +41,6 @@
                                      src="{{ $app->image_file }}"
                                      alt="User profile picture">
                             </div>
-
                             <h3 class="profile-username text-center">{{ $app->translation('title' , app()->getLocale()) }}</h3>
 
                             <ul class="list-group list-group-unbordered mb-3">

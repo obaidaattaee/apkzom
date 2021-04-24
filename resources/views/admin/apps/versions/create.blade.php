@@ -51,7 +51,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label for="tags">{{ __('common.original_link') }}</label>
-                            <input type="text" required name="original_link" id="original_link" class="form-control"
+                            <input type="url" required name="original_link" id="original_link" class="form-control"
                                    placeholder="{{ __('common.original_link') }}"
                                    value="{{ old('original_link') }}">
                             @error('original_link')
@@ -91,7 +91,7 @@
                 </div>
                 <div class="card-footer">
                     <button type="submit" class="btn btn-outline-success">{{ __('common.save') }}</button>
-                    <a href="{{ route('apps.index') }}" class="btn btn-outline-danger">{{ __('common.cancel') }}</a>
+                    <a href="{{ route('apps.index') }}" title="{{ __('common.cancel') }}" class="btn btn-outline-danger">{{ __('common.cancel') }}</a>
                 </div>
             </form>
         </div>

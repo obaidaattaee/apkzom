@@ -38,7 +38,8 @@ class AppVersionController extends Controller
 
     public function destroy(App $app, AppVersion $appVersion)
     {
-        $appVersion->delete();
-        return redirect()->route('apps.show' , ['app' => $app->id])->with('message' , __('delete_successfully'));
+        $message = __('delete_successfully');
+        $app->versions()->count() == 1 ? $message = __('common.cannot_delete') : $appVersion->delete();
+        return redirect()->route('apps.show' , ['app' => $app->id])->with('message' , ucwords($message));
     }
 }

@@ -66,4 +66,11 @@ return array (
   'add' => 'add',
   'version_number' => 'version number',
   'sort_position' => 'sort position',
+  'old_file' => 'old file',
+  'sections' => 'sections',
+  'section' => 'section',
+  'download' => 'download',
+  'download_the_app' => 'download the app',
+  'downloading' => 'downloading ...',
+  'cannot_delete' => 'cannot delete this item',
 );
