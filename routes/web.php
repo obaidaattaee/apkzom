@@ -29,7 +29,7 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
     Route::get('/', [SiteController::class, 'index']);
     Route::get('search', [SiteController::class, 'search'])->name('search');
-    Route::get('download/{app}/{title?}', [SiteController::class, 'download'])->name('download');
+    Route::get('download/{version}/{title?}', [SiteController::class, 'download'])->name('download');
     Route::get('details/{app}/{title?}', [SiteController::class, 'details'])->name('apps.details');
     Auth::routes();
 

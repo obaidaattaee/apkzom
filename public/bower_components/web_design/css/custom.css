@@ -426,7 +426,16 @@ p {
     text-decoration: none !important;
 }
 
+.extension{
+    padding: 10px;
+    border: 1px #706d6d solid;
+    border-radius: 10px;
+}
 
+.extension-margin{
+    margin-top: 30px;
+    margin-bottom: 20px!important;
+}
 .download-details-container {
     background: #f9f6f6 !important;
     padding: 15px;

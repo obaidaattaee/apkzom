@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use App\Models\App;
+use App\Models\AppVersion;
 use App\Models\Category;
 use App\Models\Slider;
 use App\Models\Tag;
@@ -30,10 +31,11 @@ class SiteController extends Controller
             ->with('sliders' , $sliders);
     }
 
-    public function download(App $app)
+    public function download(AppVersion $version)
     {
-        $app->load(['translations' , 'versions']);
-        return view('site.download')->with('app' , $app);
+        $version->load(['app' , 'app.translations']);
+        $version->app->increment('download_counter');
+        return view('site.download')->with('version' , $version);
     }
 
     public function search(Request $request){

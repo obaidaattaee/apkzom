@@ -21,7 +21,7 @@
                                     </div>
                                     <div class="col-md-9 col-sm-8">
                                         <h3 class="app-head">
-                                            {{ $app->translation('title', app()->getLocale()) }}
+                                            {{ $app->translation('title', app()->getLocale())  }}
                                         </h3>
                                         <p class="des">Download APK, faster, free and saving data!</p>
                                         <div class="ratings">
@@ -50,7 +50,7 @@
                                             </div>
                                             <div class="col-md-12 col-sm-12 col-xs-12">
                                                 <div>
-                                                    <a href="{{ route('download', ['app' => $app->id, 'title' => str_replace(' ', '-', $app->translation('title', app()->getLocale()))]) }}"
+                                                    <a href="{{ route('download', ['version' => $app->versions()->first()->id, 'title' => str_replace(' ', '-', $app->translation('title', app()->getLocale()))]) }}"
                                                         class="btn btn-info btn-large">
                                                         Download APK ({{ $app->versions()->first()->size }})
                                                     </a>
@@ -118,25 +118,40 @@
                 <div class="col-md-12 col-sm-12">
                     <div class="panel panel-default">
                         <div class="panel-heading panel-container">
-                            <h2 class="panel-title p-title">{{ ucwords(__('common.app' . ' ' . __('common.versions'))) }}
+                            <h2 class="panel-title p-title">{{ ucwords(__('common.app') . ' ' . __('common.versions')) }}
                             </h2>
                         </div>
                         <div class="panel-body">
-                            <div class="row">
+                            <div class="row" >
                                 @foreach (object_get($app, 'versions', [[]]) as $version)
 
-                                    <div class="col-md-4 col-sm-12 col-xs-12">
-                                        <div class="row">
-                                            <div class="p-panel">
+                                    <div class="col-md-4 col-sm-12 col-xs-12 " >
+                                        <div class="row" style="padding: 10px">
+                                            <div class="p-panel" style="background-color: #ecebeb; border-radius: 2px">
 
-                                                <div class="col-md-12 col-sm-12 col-xs-12 clr-left">
-                                                    <h4 class="p-head">
-                                                        {{ $app->translation('title', app()->getLocale()) }}</h4>
+                                                <div class="col-md-12 col-sm-12 col-xs-12 clr-left" style="margin-left: 10px">
+                                                    <h4 class="p-head" >
+                                                        {{ $version->title }}
+                                                    </h4>
+                                                    <p class="p-text-sm extension-margin" >
+                                                        <span class="extension">
+                                                            {{ $version->extension }}
+                                                        </span>
+                                                    </p>
                                                     <p class="p-text-sm">
-                                                        Some text here
+                                                        {{ $app->translation('title' , app()->getLocale()) }}
+                                                    </p>
+                                                    <p class="p-text-sm">
+                                                        {{ $version->published_at->format('Y-m-d') }}
                                                     </p>
                                                     <p class="coming-soon">
-                                                        COMING SOON</p>
+                                                        {{ $version->size }}
+                                                        <span style="float: right">
+                                                            <a href="{{route('download' , ['version' => $version->id , 'title' => str_replace(' ' , '-' , $app->translation('title' , app()->getLocale()) .' ' . $version->title)])}}">
+                                                                <i class="fa fa-download"></i>
+                                                            </a>
+                                                        </span>
+                                                    </p>
 
                                                 </div>
                                             </div>
@@ -145,127 +160,6 @@
                                 @endforeach
 
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row mt-40">
-                <div class="col-md-12 col-sm-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading panel-container">
-                            <h2 class="panel-title p-title">High Quality & Latest Technology</h2>
-                        </div>
-                        <div class="panel-body app-collapse-details">
-                            <div class="row">
-                                <div class="col-md-12 col-sm-12 col-xs-12">
-                                    <div class="panel-group" id="accordion">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading p-0">
-                                                <h4 class="panel-title p-0">
-                                                    <a class="accordion-toggle" data-toggle="collapse"
-                                                        data-parent="#accordion" href="#collapseOne">
-                                                        <span class="faqs-panel-icon"><i
-                                                                class="fa fa-map-o white-text"></i></span>
-                                                        Free Gaming Booster Technology
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseOne" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            Version:
-                                                        </span>
-                                                        2.1.0.0720 (139) for Android 4.0+ (Ice Cream Sandwich, API 14)
-                                                    </p>
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            Updated On:
-                                                        </span>
-                                                        2018-08-07
-                                                    </p>
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            New Features
-                                                        </span>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading p-0">
-                                                <h4 class="panel-title p-0">
-                                                    <a class="accordion-toggle" data-toggle="collapse"
-                                                        data-parent="#accordion" href="#collapseTwo">
-                                                        <span class="faqs-panel-icon"><i
-                                                                class="fa fa-map-o white-text"></i></span>
-                                                        Development News
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseTwo" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            Version:
-                                                        </span>
-                                                        2.1.0.0720 (139) for Android 4.0+ (Ice Cream Sandwich, API 14)
-                                                    </p>
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            Updated On:
-                                                        </span>
-                                                        2018-08-07
-                                                    </p>
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            New Features
-                                                        </span>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading p-0">
-                                                <h4 class="panel-title p-0">
-                                                    <a class="accordion-toggle" data-toggle="collapse"
-                                                        data-parent="#accordion" href="#collapseThree">
-                                                        <span class="faqs-panel-icon"><i
-                                                                class="fa fa-map-o white-text"></i></span>
-                                                        Markert Emeerging New Games
-                                                    </a>
-                                                </h4>
-                                            </div>
-                                            <div id="collapseThree" class="panel-collapse collapse">
-                                                <div class="panel-body">
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            Version:
-                                                        </span>
-                                                        2.1.0.0720 (139) for Android 4.0+ (Ice Cream Sandwich, API 14)
-                                                    </p>
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            Updated On:
-                                                        </span>
-                                                        2018-08-07
-                                                    </p>
-                                                    <p class="col-details">
-                                                        <span class="t-bold">
-                                                            New Features
-                                                        </span>
-                                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
                     </div>
                 </div>

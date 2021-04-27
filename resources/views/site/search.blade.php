@@ -34,7 +34,7 @@
                                                 </div>
                                                 <div class="col-md-12 col-sm-12 col-xs-12">
                                                     <div class="download-details-container">
-                                                        <a href="{{ route('download' , ['app' => $app->id , 'title' => str_replace(' ' , '-' , $app->translation('title' , app()->getLocale()))]) }}" class="download-details">
+                                                        <a href="{{ route('apps.details' , ['app' => $app->id , 'title' => str_replace(' ' , '-' , $app->translation('title' , app()->getLocale()))]) }}" class="download-details">
                                                             <div>
                                                                 <h4 class="p-head-details">{{ $app->translation('title' , app()->getLocale()) }}</h4>
                                                                 <div class="ratings">

@@ -116,7 +116,7 @@
                                                         26-08-2018
                                                     </p>
                                                     <p>
-                                                        <a href="{{ route('apps.details' , ['app' => $app->id , 'title' => $app->translation('title' , app()->getLocale())]) }}" class="btn btn-info p-btn">{{ ucwords(__('common.download')) }}</a>
+                                                        <a href="{{ route('apps.details' , ['app' => $app->id , 'title' => str_replace(' ' , '-' ,  $app->translation('title' , app()->getLocale()))]) }}" class="btn btn-info p-btn">{{ ucwords(__('common.download')) }}</a>
                                                     </p>
                                                 </div>
                                             </div>
