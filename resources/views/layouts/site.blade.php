@@ -33,22 +33,26 @@
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
-
+@php
+    $gameAppCategories = Cache::remember('gameAppCategories', 3600, function (){
+            return App\Models\Category::find([App\Models\Category::CATEGORIES[0]['id'] , App\Models\Category::CATEGORIES[1]['id']]);
+        });
+@endphp
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-support menu-icons"></i>
-                                    Support
+                                <a href="{{ route('search' , ['ci' => 1 , 'title' => str_replace(' ' , '-' , $gameAppCategories->find(App\Models\Category::CATEGORIES[0]['id'])->translation('title' , app()->getLocale()))]) }}">
+                                    <i class="{{ $gameAppCategories->find(App\Models\Category::CATEGORIES[0]['id'])->icon }} menu-icons"></i>
+                                    {{ $gameAppCategories->find(App\Models\Category::CATEGORIES[0]['id'])->translation('title' , app()->getLocale()) }}
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-arrows-alt menu-icons"></i>
-                                    Apps
+                                <a href="{{ route('search' , ['ci' => 2 , 'title' => str_replace(' ' , '-' , $gameAppCategories->find(App\Models\Category::CATEGORIES[1]['id'])->translation('title' , app()->getLocale()))]) }}">
+                                    <i class="{{ $gameAppCategories->find(App\Models\Category::CATEGORIES[1]['id'])->icon }} menu-icons"></i>
+                                    {{ $gameAppCategories->find(App\Models\Category::CATEGORIES[1]['id'])->translation('title' , app()->getLocale()) }}
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('search' , ['sort' => __('search.download')]) }}">
                                     <i class="fa fa-download menu-icons"></i>
                                     Downloads
                                 </a>

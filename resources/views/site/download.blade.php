@@ -31,7 +31,7 @@
                                                     <h4>
                                                     </h4>
                                                     <p x-show="counter == 10">
-                                                        If the download doesn't start, <a href="{{$app->versions()->first()->original_link}}" title="{{$app->versions()->first()->title}}">click here</a>
+                                                        If the download doesn't start, <a href="{{ route('download' , ['app' => $app->id , 'title' , str_replace(' ' , '-' , $app->translation('title' , app()->getLocale()))]) }}" title="{{str_replace(' ' , '-' , $app->translation('title' , app()->getLocale()))}}">click here</a>
                                                     </p>
                                                 </div>
 

@@ -20,7 +20,7 @@
                         {{ $app->published_at }}
                     </p>
                     <p>
-                        <a href="{{ route('download' , ['app' => $app->id , 'title' => $app->translation('title' , app()->getLocale())]) }}" class="btn btn-info p-btn">Download</a>
+                        <a href="{{ route('apps.details' , ['app' => $app->id , 'title' => $app->translation('title' , app()->getLocale())]) }}" class="btn btn-info p-btn">Download</a>
                     </p>
                 </div>
             </div>

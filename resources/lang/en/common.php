@@ -73,4 +73,7 @@ return array (
   'download_the_app' => 'download the app',
   'downloading' => 'downloading ...',
   'cannot_delete' => 'cannot delete this item',
+  'last_version' => 'last version',
+  'publish_date' => 'publish date',
+  'app_detailes' => 'app details '
 );
