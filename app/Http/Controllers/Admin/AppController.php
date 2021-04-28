@@ -16,6 +16,7 @@ use Intervention\Image\Facades\Image;
 class AppController extends Controller
 {
 
+
     public function index(AppDataTable $dataTable)
     {
         return $dataTable->render('admin.apps.index');
@@ -32,7 +33,7 @@ class AppController extends Controller
         try {
             $file = $request->file('logoFile');
             $fileName = Storage::disk('uploads')->put(basename($file), $file);
-            $file = Image::make($file)->resize(100, 100)->encode('jpg');
+            $file = Image::make($file)->resize(160, 160)->encode('jpg');
             $logo = $request->input('on_server') ?
                 Storage::disk('uploads')->put($imagePath . '/' . $fileName, $file) :
                 Storage::disk('b2')->put('uploads/' . $imagePath . '/' . $fileName, $file);
@@ -80,20 +81,18 @@ class AppController extends Controller
             try {
                 $file = $request->file('logoFile');
                 $fileName = Storage::disk('uploads')->put(basename($file), $file);
-                $file = Image::make($file)->resize(100, 100)->encode('jpg');
+                $file = Image::make($file)->resize(160 , 160)->encode('jpg');
                 $logo = $request->input('on_server') ?
                     Storage::disk('uploads')->put($imagePath . '/' . $fileName, $file) :
                     Storage::disk('b2')->put('uploads/' . $imagePath . '/' . $fileName, $file);
                 $request->merge(['image' => $fileName]);
                 $request['on_server'] = $request['on_server'] ? true : false;
-
             } catch (\Exception $exception) {
                 return redirect()->back()->with('message', __('common.cannot_upload_file'));
             }
         } else {
             $request['on_server'] = $app->on_server;
             $request['image'] = $app->image;
-
         }
 
         $app->update($request->only([

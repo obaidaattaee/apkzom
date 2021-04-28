@@ -21,13 +21,16 @@ use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VendorsController;
 use App\Http\Controllers\Site\SiteController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
     Route::get('/', [SiteController::class, 'index']);
     Route::get('search', [SiteController::class, 'search'])->name('search');
-    Route::get('download/{app}/{title?}', [SiteController::class, 'download'])->name('download');
+    Route::get('download/{version}/{title?}', [SiteController::class, 'download'])->name('download');
+    Route::get('details/{app}/{title?}', [SiteController::class, 'details'])->name('apps.details');
     Auth::routes();
 
     Route::get('/home', 'HomeController@index')->name('home');
@@ -56,5 +59,6 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
         Route::resource('vendors', 'VendorsController');
         Route::resource('apps/{app}/images', 'AppImageController');
         Route::resource('apps/{app}/app-versions', 'AppVersionController');
+        Route::resource('footers', 'FooterController');
     });
 });

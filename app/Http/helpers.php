@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Footer;
 use App\Models\Section;
 use App\Models\Tag;
 use App\Models\Vendor;
@@ -24,7 +25,7 @@ if (!function_exists('vendors')) {
 if (!function_exists('categories')) {
     function categories()
     {
-        $categories = Cache::remember('categories', 3600, function () {
+        $categories = Cache::remember('categories', 3600, function (){
             return Category::where('is_active', true)->get();
         });
         return $categories;
@@ -34,9 +35,18 @@ if (!function_exists('categories')) {
 if (!function_exists('tags')) {
     function tags()
     {
-        $tags = Cache::remember('users', 3600, function () {
+        $tags = Cache::remember('tags', 3600, function () {
             return Tag::where('is_active', true)->get();
         });
         return $tags;
+    }
+}
+if (!function_exists('footer')) {
+    function footer()
+    {
+        $footer = Cache::remember('footer', 3600, function () {
+            return Footer::get();
+        });
+        return Footer::has('children')->with('children')->get();;
     }
 }

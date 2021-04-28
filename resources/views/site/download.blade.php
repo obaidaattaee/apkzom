@@ -25,13 +25,19 @@
 
                                                     </h3>
                                                     <h4 class="d-size">
-                                                        {{ $app->versions()->first()->title }}
-                                                        ({{ $app->versions()->first()->size }})
+                                                        {{ $version->title }}
+                                                        ({{ $version->size }})
                                                     </h4>
                                                     <h4>
                                                     </h4>
                                                     <p x-show="counter == 10">
-                                                        If the download doesn't start, <a href="{{$app->versions()->first()->original_link}}" title="{{$app->versions()->first()->title}}">click here</a>
+                                                        If the download doesn't start,
+                                                        <a href="{{ route('download' , [
+                                                                    'version' => $version->id ,
+                                                                     'title' => str_replace(' ' , '-' , $version->app->translation('title' , app()->getLocale()) .' ' . $version->title)]) }}"
+                                                           title="{{str_replace(' ' , '-' , $version->app->translation('title' , app()->getLocale()) . ' ' . $version->title)}}">
+                                                            click here
+                                                        </a>
                                                     </p>
                                                 </div>
 
@@ -39,20 +45,20 @@
                                             <div class="row">
                                                 <div class="download-box">
                                                     <div class="col-md-2 col-sm-4">
-                                                        <img src="{{ $app->image_file }}" class="img-responsive"
-                                                             alt="{{ $app->translation('title' , app()->getLocale()) }}"
-                                                             title="{{ $app->translation('title' , app()->getLocale()) }}"/>
+                                                        <img src="{{ $version->app->image_file }}" class="img-responsive"
+                                                             alt="{{ str_replace(' ' , '-' , $version->app->translation('title' , app()->getLocale()) .' ' . $version->title) }}"
+                                                             title="{{  str_replace(' ' , '-' , $version->app->translation('title' , app()->getLocale()) .' ' . $version->title) }}"/>
                                                     </div>
                                                     <div class="col-md-7 col-sm-8">
                                                         <h3>
-                                                            {{ $app->translation('title' , app()->getLocale()) }}
+                                                            {{  str_replace(' ' , '-' , $version->app->translation('title' , app()->getLocale()) .' ' . $version->title) }}
                                                         </h3>
                                                         <p class="des">Download APK, faster, free and saving data!</p>
                                                     </div>
                                                     <template x-if="counter == 10">
                                                         <div class="col-md-3 col-sm-12">
-                                                            <a href="{{ $app->versions()->first()->original_link }}"
-                                                               title="{{ $app->versions()->first()->title }}"
+                                                            <a href="{{ $version->original_link }}"
+                                                               title="{{ $version->title }}"
                                                                class="btn btn-info p-large-btn">
                                                                 <i class="fa fa-download"></i>
                                                                 DOWNLOAD

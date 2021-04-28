@@ -8,39 +8,9 @@
                 </div>
                 <div>
                     @foreach(tags() as $tag)
-                        <a href="{{ route('search' , ['ti' => $tag->id, 'tag' => $tag->translation('title' , app()->getLocale())]) }}"
+                        <a href="{{ route('search' , ['ti' => [$tag->id], 'tag' => str_replace(' ' , '-' , $tag->translation('title' , app()->getLocale())) ]) }}"
                            class="btn btn-default btn-links">{{ $tag->translation('title' , app()->getLocale()) }}</a>
                     @endforeach
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row mt-40">
-        <div class="col-md-12 col-sm-12">
-            <div class="r-box">
-                <div class="p-panel">
-                    <div class="col-md-6 col-sm-6 col-xs-6">
-                        <img src="img/placeholder-01.png" class="img-responsive p-img" alt="img"/>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-6 clr-left">
-                        <h4 class="p-head">Digital World</h4>
-                        <div class="ratings">
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-o"></i>
-                        </div>
-                        <p class="p-text">
-                            Consectetur adipiscing elit. Cras iaculis eros vel tellus.
-                        </p>
-
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <p>
-                            <a href="" class="btn btn-info p-large-btn">Download (82Mb)</a>
-                        </p>
-                    </div>
                 </div>
             </div>
         </div>
@@ -93,7 +63,7 @@
                             @foreach(vendors() as $vendor)
                                 <div class="col-md-6 col-sm-12 col-xs-6 py-2">
                                     <p>
-                                        <a href="">
+                                        <a href="{{ route('search' , ['vi' => $vendor->id , 'vendor_name' => str_replace(' ' , '-' , $vendor->name )]) }}">
                                             <img src="{{ $vendor->image_file }}" class="img-circle"
                                                  width="50px"></img>
                                             <span>
@@ -130,13 +100,13 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12">
                                         <div class="row">
                                             <div class="p-panel">
-                                                <div class="col-md-6 col-sm-6 col-xs-6">
+                                                <div class="col-md-4 col-sm-4 col-xs-4">
                                                     <img src="{{ $app->image_file }}"
                                                          class="img-responsive p-img"
                                                          title="{{ $app->translation('title' , app()->getLocale()) }}"
                                                          alt="{{ $app->translation('title' , app()->getLocale()) }}">
                                                 </div>
-                                                <div class="col-md-6 col-sm-6 col-xs-6 clr-left">
+                                                <div class="col-md-8 col-sm-8 col-xs-8 clr-left">
                                                     <h4 class="p-head">{{ $app->translation('title' , app()->getLocale()) }}</h4>
                                                     <div class="ratings">
                                                         @component('admin.vendors.rate' , ['rate' => $app->rate])
@@ -146,7 +116,7 @@
                                                         26-08-2018
                                                     </p>
                                                     <p>
-                                                        <a href="{{ route('download' , ['app' => $app->id , 'title' => $app->translation('title' , app()->getLocale())]) }}" class="btn btn-info p-btn">{{ ucwords(__('common.download')) }}</a>
+                                                        <a href="{{ route('apps.details' , ['app' => $app->id , 'title' => str_replace(' ' , '-' ,  $app->translation('title' , app()->getLocale()))]) }}" class="btn btn-info p-btn">{{ ucwords(__('common.download')) }}</a>
                                                     </p>
                                                 </div>
                                             </div>
@@ -174,7 +144,7 @@
                             @foreach(categories() as $category)
                                 <div class="col-md-6 col-sm-12 col-xs-6">
                                     <p>
-                                        <a href="{{ route('search' , ['ci' => $category->id , 'category' => $category->translation('title' , app()->getLocale())]) }}">
+                                        <a href="{{ route('search' , ['ci' => $category->id , 'category' =>  str_replace(' ' , '-' , $category->translation('title' , app()->getLocale())) ]) }}">
                                             <i class="{{ $category->icon }}"></i>
                                             <span>
                                                 {{ $category->translation('title' , app()->getLocale()) }}

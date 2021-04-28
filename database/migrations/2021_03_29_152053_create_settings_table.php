@@ -17,11 +17,8 @@ class CreateSettingsTable extends Migration
             $table->bigIncrements('id');
             $table->string('key');
             $table->string('value');
-            $table->unsignedBigInteger('created_by');
             $table->softDeletes();
             $table->timestamps();
-
-            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

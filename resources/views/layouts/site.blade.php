@@ -16,7 +16,7 @@
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossorigin="anonymous"/>
 </head>
-<body >
+<body>
 <div x-data="data()">
     <nav class="navbar navbar-default">
         <div class="container">
@@ -29,26 +29,30 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="{{ url('/') }}">
-                            <img src="img/logo.jpg" class="img-responsive logo-style" alt="img"/>
+                            <img src="{{ asset('uploads/260*50/' . config()->get('settings.logo')) }}" class="img-responsive logo-style" alt="img"/>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
-
+                        @php
+                            $gameAppCategories = Cache::remember('gameAppCategories', 3600, function (){
+                                    return App\Models\Category::find([App\Models\Category::CATEGORIES[0]['id'] , App\Models\Category::CATEGORIES[1]['id']]);
+                                });
+                        @endphp
                         <ul class="nav navbar-nav navbar-right">
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-support menu-icons"></i>
-                                    Support
+                                <a href="{{ route('search' , ['ci' => 1 , 'title' => str_replace(' ' , '-' , $gameAppCategories->find(App\Models\Category::CATEGORIES[0]['id'])->translation('title' , app()->getLocale()))]) }}">
+                                    <i class="{{ $gameAppCategories->find(App\Models\Category::CATEGORIES[0]['id'])->icon }} menu-icons"></i>
+                                    {{ $gameAppCategories->find(App\Models\Category::CATEGORIES[0]['id'])->translation('title' , app()->getLocale()) }}
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
-                                    <i class="fa fa-arrows-alt menu-icons"></i>
-                                    Apps
+                                <a href="{{ route('search' , ['ci' => 2 , 'title' => str_replace(' ' , '-' , $gameAppCategories->find(App\Models\Category::CATEGORIES[1]['id'])->translation('title' , app()->getLocale()))]) }}">
+                                    <i class="{{ $gameAppCategories->find(App\Models\Category::CATEGORIES[1]['id'])->icon }} menu-icons"></i>
+                                    {{ $gameAppCategories->find(App\Models\Category::CATEGORIES[1]['id'])->translation('title' , app()->getLocale()) }}
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="{{ route('search' , ['sort' => __('search.download')]) }}">
                                     <i class="fa fa-download menu-icons"></i>
                                     Downloads
                                 </a>
@@ -90,111 +94,20 @@
         <div class="footer-overlay">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3 col-sm-3">
-                        <h3 class="f02">Solutions</h3>
-                        <ul class="footer-list">
-                            <li>
-                                <a href="">
-                                    Order Lookup
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Messenger APK Sols
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Request
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Order Lookup
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Messenger APK
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Request Refund
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <h3 class="f02">Top Developers</h3>
-                        <ul class="footer-list">
-                            <li>
-                                <a href="">
-                                    Order Lookup
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Alpha Lite
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Request Refund
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Order Lookup
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Facebook Lite
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Youtube Apk
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 col-sm-3">
-                        <h3 class="f02">Legal</h3>
-                        <ul class="footer-list">
-                            <li>
-                                <a href="">
-                                    About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Terms & Conditions
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Privacy
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    About Us
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Terms & Conditions
-                                </a>
-                            </li>
-                            <li>
-                                <a href="">
-                                    Privacy
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+                    @foreach(footer() as $footer)
+                        <div class="col-md-3 col-sm-3">
+                            <h3 class="f02">{{ $footer->title }}</h3>
+                            <ul class="footer-list">
+                                @foreach($footer->children as $children)
+                                    <li>
+                                        <a href="{{ $children->link }}">
+                                            {{ $children->title }}
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endforeach
                     <div class="col-md-3 col-sm-3">
                         <h3 class="f02">Contact Us</h3>
                         <ul class="footer-list">
@@ -241,7 +154,7 @@
         return {
             searchItems: [],
             searchValue: '',
-            search: function (event){
+            search: function (event) {
                 this.searchValue = event.target.value;
             }
         }
