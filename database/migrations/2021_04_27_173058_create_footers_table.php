@@ -15,7 +15,13 @@ class CreateFootersTable extends Migration
     {
         Schema::create('footers', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('title');
+            $table->string('link');
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->softDeletes();
             $table->timestamps();
+
+            $table->foreign('parent_id')->references('id')->on('footers');
         });
     }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\Footer;
 use App\Models\Section;
 use App\Models\Tag;
 use App\Models\Vendor;
@@ -38,5 +39,14 @@ if (!function_exists('tags')) {
             return Tag::where('is_active', true)->get();
         });
         return $tags;
+    }
+}
+if (!function_exists('footer')) {
+    function footer()
+    {
+        $footer = Cache::remember('footer', 3600, function () {
+            return Footer::get();
+        });
+        return Footer::has('children')->with('children')->get();;
     }
 }

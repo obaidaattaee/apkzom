@@ -75,5 +75,8 @@ return array (
   'cannot_delete' => 'cannot delete this item',
   'last_version' => 'last version',
   'publish_date' => 'publish date',
-  'app_detailes' => 'app details '
+  'app_detailes' => 'app details ',
+  'footer' => 'footer ',
+  'footers' => 'footers',
+  'footer_management' => 'footer management',
 );
