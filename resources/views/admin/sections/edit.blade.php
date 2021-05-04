@@ -76,7 +76,7 @@
                 url: '{{route('apps.json')}}',
                 dataType: 'json',
                 data: function (params) {
-                    return {tag: params.term}
+                    return {title: params.term}
                 },
                 delay: 250,
                 processResults: function (data) {

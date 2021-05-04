@@ -65,6 +65,7 @@ class AppController extends Controller
 
     public function show(App $app)
     {
+        $app->load(['versions' , 'images']);
         return view('admin.apps.show')->with('app', $app);
     }
 
@@ -81,7 +82,7 @@ class AppController extends Controller
             try {
                 $file = $request->file('logoFile');
                 $fileName = Storage::disk('uploads')->put(basename($file), $file);
-                $file = Image::make($file)->resize(160 , 160)->encode('jpg');
+                $file = Image::make($file)->resize(160, 160)->encode('jpg');
                 $logo = $request->input('on_server') ?
                     Storage::disk('uploads')->put($imagePath . '/' . $fileName, $file) :
                     Storage::disk('b2')->put('uploads/' . $imagePath . '/' . $fileName, $file);
@@ -112,7 +113,7 @@ class AppController extends Controller
         $apps = App::query();
         if ($request->has('title')) {
             $apps = $apps->whereHas('translations', function ($translation) use ($request) {
-                return $translation->where('title', $request->input('title'));
+                return $translation->where('title', 'like', "%{$request->input('title')}%");
             });
         }
         $apps = $apps->limit(4)->get();

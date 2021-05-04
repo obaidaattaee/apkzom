@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/vendor/sitemap/styles/xml.xsl" type="text/xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Inventore%20quod%20recus</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Deserunt%20nesciunt%20d</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Maiores%20irure%20offici</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Enim%20duis%20nihil%20eum</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Nostrud%20nostrud%20mole</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Anim%20est%20doloremque</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Sed%20alias%20nihil%20sunt</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Sed%20velit%20eos%20rem%20t</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+	<url>
+	<loc>http://127.0.0.1:8000/details/1/Dolor%20ex%20sunt%20nihil</loc>
+		<priority>9</priority>
+		<lastmod>2021-05-02T20:07:51+00:00</lastmod>
+		<changefreq>daily</changefreq>
+	</url>
+</urlset>
+

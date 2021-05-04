@@ -9,6 +9,7 @@ use Spatie\Translatable\HasTranslations;
 /**
  * Class App
  * @package App\Models
+ * @method static orderBy(string $string, string $string1)
  */
 class App extends Model
 {
@@ -25,7 +26,7 @@ class App extends Model
      * @var array
      */
     protected $guarded = [];
-    protected $appends = ['image_file'];
+    protected $appends = ['image_file' , 'title_translation'];
     protected $casts = ['published_at', 'datetime'];
 
     public function getImageFileAttribute()
@@ -73,6 +74,10 @@ class App extends Model
     public function versions()
     {
         return $this->hasMany(AppVersion::class, 'app_id', 'id')->orderBy('sort_number');
+    }
+
+    public function getTitleTranslationAttribute(){
+        return $this->translation('title' , app()->getLocale());
     }
 
     public function translation($column, $locale = 'en')

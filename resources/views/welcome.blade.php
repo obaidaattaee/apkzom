@@ -1,5 +1,8 @@
 @extends('layouts.site')
 
+@section('title')
+    {{ ucwords(__('common.home')) }}
+@endsection
 
 @section('content')
     <div class="container">

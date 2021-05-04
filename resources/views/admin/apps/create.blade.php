@@ -139,74 +139,128 @@
                     </div>
                     <hr>
                     <h4>{{ ucwords(__('common.version')) }}</h4>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="extention">{{ __('common.title') }}</label>
-                            <input type="text" required name="version[title]" id="title" class="form-control"
-                                   placeholder="{{ __('common.title') }}"
-                                   value="{{ old('version[extension]') }}">
-                            @error('version.title')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="published_at">{{ __('common.published_at') }}</label>
-                            <input type="date" required name="version[published_at]" id="published_at" class="form-control"
-                                   placeholder="{{ __('common.published_at') }}"
-                                   value="{{ old('version[published_at]') }}">
-                            @error('version.published_at')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
+                    <div class="card-body">
+                        @csrf
 
-                    <div class="row">
-                        <div class="form-group required col-md-6">
-                            <label for="category_id">{{ __('common.version_number') }}</label>
-                            <input type="text" required name="version[version_number]" id="version_number" class="form-control"
-                                   placeholder="{{ __('common.version_number') }}"
-                                   value="{{ old('version[version_number]') }}">
-                            @error('version.version_number')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="extention">{{ __('common.title') }}</label>
+                                <input type="text" required name="version[title]" id="title" class="form-control"
+                                       placeholder="{{ __('common.title') }}"
+                                       value="{{ old('extension') }}">
+                                @error('title')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="published_at">{{ __('common.published_at') }}</label>
+                                <input type="date" required name="version[published_at]" id="published_at" class="form-control"
+                                       placeholder="{{ __('common.published_at') }}"
+                                       value="{{ old('published_at') }}">
+                                @error('version.published_at')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                        <div class="form-group col-md-6">
-                            <label for="tags">{{ __('common.original_link') }}</label>
-                            <input type="url" required name="version[original_link]" id="original_link" class="form-control"
-                                   placeholder="{{ __('common.original_link') }}"
-                                   value="{{ old('version[original_link]') }}">
-                            @error('version.original_link')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+
+                        <div class="row">
+                            <div class="form-group required col-md-6">
+                                <label for="category_id">{{ __('common.version_number') }}</label>
+                                <input type="text" required name="version[version_number]" id="version_number" class="form-control"
+                                       placeholder="{{ __('common.version_number') }}"
+                                       value="{{ old('version_number') }}">
+                                @error('version.version_number')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.original_link') }}</label>
+                                <input type="url" required name="version[original_link]" id="original_link" class="form-control"
+                                       placeholder="{{ __('common.original_link') }}"
+                                       value="{{ old('original_link') }}">
+                                @error('version.original_link')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="tags">{{ __('common.extension') }}</label>
-                            <input type="text" required name="version[extension]" id="extension" class="form-control"
-                                   placeholder="{{ __('common.extension') }}"
-                                   value="{{ old('version[extension]') }}">
-                            @error('version.extension')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="tags">{{ __('common.size') }}</label>
-                            <input type="text" required name="version[size]" id="size" class="form-control"
-                                   placeholder="{{ __('common.size') }}"
-                                   value="{{ old('version[size]') }}">
-                            @error('version.size')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="tags">{{ __('common.sort_position') }}</label>
-                            <input type="number" required name="version[sort_number]" id="sort_number" class="form-control"
-                                   placeholder="{{ __('common.sort_position') }}"
-                                   value="{{ old('version[sort_number]') }}">
-                            @error('version.sort_number')
-                            <div class="text-danger">{{ $message }}</div>
-                            @enderror
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.extension') }}</label>
+                                <input type="text" required name="version[extension]" id="extension" class="form-control"
+                                       placeholder="{{ __('common.extension') }}"
+                                       value="{{ old('extension') }}">
+                                @error('version.extension')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.size') }}</label>
+                                <input type="text" required name="version[size]" id="size" class="form-control"
+                                       placeholder="{{ __('common.size') }}"
+                                       value="{{ old('size') }}">
+                                @error('version.size')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.sort_position') }}</label>
+                                <input type="number" required name="version[sort_number]" id="sort_number" class="form-control"
+                                       placeholder="{{ __('common.sort_position') }}"
+                                       value="{{ old('sort_number') }}">
+                                @error('version.sort_number')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.signature') }}</label>
+                                <input type="text" required name="version[signature]" id="signature" class="form-control"
+                                       placeholder="{{ __('common.signature') }}"
+                                       value="{{ old('signature') }}">
+                                @error('version.signature')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.screen_dpi') }}</label>
+                                <input type="text" required name="version[screen_dpi]" id="screen_dpi" class="form-control"
+                                       placeholder="{{ __('common.screen_dpi') }}"
+                                       value="{{ old('screen_dpi') }}">
+                                @error('version.screen_dpi')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.architecture') }}</label>
+                                <input type="text" required name="version[architecture]" id="architecture" class="form-control"
+                                       placeholder="{{ __('common.architecture') }}"
+                                       value="{{ old('architecture') }}">
+                                @error('version.architecture')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="tags">{{ __('common.file_hash') }}</label>
+                                <input type="text" required name="version[file_hash]" id="file_hash" class="form-control"
+                                       placeholder="{{ __('common.file_hash') }}"
+                                       value="{{ old('file_hash') }}">
+                                @error('version.file_hash')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="os_version_id">{{ __('common.os_version') }}</label>
+                                <select required name="version[os_version_id]" id="os_version_id1" class="form-control">
+
+                                </select>
+                                @error('version.os_version_id')
+                                <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+
                         </div>
                     </div>
                 </div>
@@ -312,7 +366,7 @@
                 cache: true
             }
         })
-        $('#os_version_id').select2({
+        $('#os_version_id , #os_version_id1').select2({
             placeholder: "{{ __('common.select') . ' ' . __('common.os_version') }}",
             ajax: {
                 url: '{{route('os_versions')}}',

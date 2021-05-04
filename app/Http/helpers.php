@@ -25,7 +25,7 @@ if (!function_exists('vendors')) {
 if (!function_exists('categories')) {
     function categories()
     {
-        $categories = Cache::remember('categories', 3600, function (){
+        $categories = Cache::remember('categories', 3600, function () {
             return Category::where('is_active', true)->get();
         });
         return $categories;

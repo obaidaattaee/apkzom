@@ -79,4 +79,6 @@ return array (
   'footer' => 'footer ',
   'footers' => 'footers',
   'footer_management' => 'footer management',
+  'general_settings' => 'General settings',
+  'search' => 'search' ,
 );
