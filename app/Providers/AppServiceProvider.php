@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\App;
 use App\Models\Category;
 use App\Models\OSType;
+use App\Models\Section;
 use App\Models\Settings;
 use App\Models\Tag;
 use App\Observers\AppObserver;

@@ -20,6 +20,11 @@ class CreateAppVersionsTable extends Migration
             $table->string('size')->nullable();
             $table->dateTime('published_at');
             $table->unsignedBigInteger('app_id');
+            $table->unsignedBigInteger('os_version_id');
+            $table->string('signature');
+            $table->string('screen_dpi');
+            $table->string('architecture');
+            $table->string('file_hash');
             $table->string('original_link');
             $table->string('extension');
             $table->integer('sort_number')->nullable();
@@ -27,6 +32,7 @@ class CreateAppVersionsTable extends Migration
             $table->timestamps();
 
             $table->foreign('app_id')->references('id')->on('apps');
+            $table->foreign('os_version_id')->references('id')->on('o_s_versions');
         });
     }
 

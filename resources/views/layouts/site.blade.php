@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Web</title>
+    <title>{{ env('APP_NAME' ,'APKZOM') }} | @yield('title')</title>
     <link href="{{ asset('bower_components/web_design/css/custom.css') }}" rel="stylesheet">
     <!-- Bootstrap css -->
     <link href="{{ asset('bower_components/web_design/css/bootstrap.css')}}" rel="stylesheet">
@@ -15,6 +15,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
           integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
           crossorigin="anonymous"/>
+
+          @laravelPWA
+          @php
+          $direction = \Mcamara\LaravelLocalization\Facades\LaravelLocalization::getCurrentLocaleDirection();
+      @endphp
 </head>
 <body>
 <div x-data="data()">
@@ -29,7 +34,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <a class="navbar-brand" href="{{ url('/') }}">
-                            <img src="{{ asset('uploads/260*50/' . config()->get('settings.logo')) }}" class="img-responsive logo-style" alt="img"/>
+                            <img src="{{ config()->get('settings.logo') }}" class="img-responsive logo-style" alt="img"/>
                         </a>
                     </div>
                     <div class="collapse navbar-collapse" id="myNavbar">
@@ -57,26 +62,22 @@
                                     Downloads
                                 </a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                   aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cogs menu-icons"></i>
-                                    Products <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <i class="fa fa-user-o menu-icons"></i>
-                                    Contact
+                            <li class="nav-item dropdown">
+                                <a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
+                                    {{ app() ->getLocale()}}
                                 </a>
+                                <div class="dropdown-menu dropdown-menu-lg {{$direction == "rtl" ? '' : 'dropdown-menu-right'}}"
+                                     @if(!$direction == "rtl")  style="left: inherit; right: 0px;" @endif>
+                                    @foreach(\Mcamara\LaravelLocalization\Facades\LaravelLocalization::getSupportedLocales() as $localeCode => $properties)
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" rel="alternate" hreflang="{{ $localeCode }}"
+                                           href="{{ LaravelLocalization::getLocalizedURL($localeCode, null, [], true) }}">
+                                            {{ $properties['native'] }}
+                                        </a>
+                                    @endforeach
+                                </div>
                             </li>
+
 
 
                         </ul>
@@ -111,35 +112,33 @@
                     <div class="col-md-3 col-sm-3">
                         <h3 class="f02">Contact Us</h3>
                         <ul class="footer-list">
+
                             <li>
-                                Some text Here..
-                            </li>
-                            <li>
-                                Abc Road, Xyz New City
+                                {{ config()->get('settings.address') }}
                             </li>
                             <li class="mt-10">
-                                <i class="fa fa-envelope"></i>
-                                abc@web.com
+                                <i class="fab fa-envelope"></i>
+                                {{ config()->get('settings.mail') }}
                             </li>
                             <li class="mt-10">
-                                <i class="fa fa-phone"></i>
-                                (92) 12 12 102
+                                <i class="fab fa-phone"></i>
+                                {{ config()->get('settings.phone') }}
                             </li>
                             <li class="footer-social-list mt-10">
-                                <a href="">
-                                    <i class="fa fa-facebook"></i>
+                                <a href="{{ config()->get('settings.facebook') }}">
+                                    <i class="fab fa-facebook-square" aria-hidden="true"></i>
                                 </a>
-                                <a href="">
-                                    <i class="fa fa-instagram"></i>
+                                <a href="{{ config()->get('settings.instagram') }}">
+                                    <i class="fab fa-instagram"></i>
                                 </a>
-                                <a href="">
-                                    <i class="fa fa-twitter"></i>
+                                <a href="{{ config()->get('settings.twitter') }}">
+                                    <i class="fab fa-twitter"></i>
                                 </a>
-                                <a href="">
-                                    <i class="fa fa-linkedin"></i>
+                                <a href="{{ config()->get('settings.linkedin') }}">
+                                    <i class="fab fa-linkedin"></i>
                                 </a>
-                                <a href="">
-                                    <i class="fa fa-telegram"></i>
+                                <a href="{{ config()->get('settings.telegram') }}">
+                                    <i class="fab fa-telegram"></i>
                                 </a>
                             </li>
                         </ul>
@@ -149,18 +148,12 @@
         </div>
     </div>
 </div>
-<script !src="">
-    function data() {
-        return {
-            searchItems: [],
-            searchValue: '',
-            search: function (event) {
-                this.searchValue = event.target.value;
-            }
-        }
-    }
-</script>
+
 <!--JQUERY AND BOOTSTRAP JS REFERENCE LINK-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.js"
+    integrity="sha512-otOZr2EcknK9a5aa3BbMR9XOjYKtxxscwyRHN6zmdXuRfJ5uApkHB7cz1laWk2g8RKLzV9qv/fl3RPwfCuoxHQ=="
+    crossorigin="anonymous"></script>
+
 <script src="{{ asset('bower_components/web_design/js/jquery.js') }}"></script>
 <script src="{{ asset('bower_components/web_design/js/bootstrap.min.js') }}"></script>
 </body>

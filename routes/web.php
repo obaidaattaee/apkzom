@@ -17,13 +17,19 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\OSTypeController;
 use App\Http\Controllers\Admin\OSVersionController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\SettingsController;
+use App\Http\Controllers\Admin\SitemapController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\VendorsController;
 use App\Http\Controllers\Site\SiteController;
+use App\Models\Category;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\URL;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use SebastianBergmann\LinesOfCode\Counter;
 
 Route::prefix(LaravelLocalization::setLocale())->group(function () {
 
@@ -33,20 +39,27 @@ Route::prefix(LaravelLocalization::setLocale())->group(function () {
     Route::get('details/{app}/{title?}', [SiteController::class, 'details'])->name('apps.details');
     Auth::routes();
 
+
+    Route::get('users/json', [UserController::class, 'users'])->name('users.json');
+    Route::get('apps/json', [AppController::class, 'apps'])->name('apps.json');
+    Route::get('vendors/json', [VendorsController::class, 'vendors'])->name('vendors.json');
+    Route::get('roles/json', [UserController::class, 'roles'])->name('roles');
+    Route::get('category/json', [CategoryController::class, 'categories'])->name('category');
+    Route::get('tags/json', [TagController::class, 'tags'])->name('tags');
+    Route::get('os_versions/json', [OSVersionController::class, 'versions'])->name('os_versions');
+    Route::get('os-types/search', [OSTypeController::class, 'search'])->name('os_types.search');
+
+    
     Route::get('/home', 'HomeController@index')->name('home');
     Route::prefix('admin')->namespace('Admin')->middleware(['auth', 'role:admin'])->group(function () {
-
-        Route::get('users/json', [UserController::class, 'users'])->name('users.json');
-        Route::get('apps/json', [AppController::class, 'apps'])->name('apps.json');
-        Route::get('vendors/json', [VendorsController::class, 'vendors'])->name('vendors.json');
-        Route::get('roles/json', [UserController::class, 'roles'])->name('roles');
-        Route::get('category/json', [CategoryController::class, 'categories'])->name('category');
-        Route::get('tags/json', [TagController::class, 'tags'])->name('tags');
-        Route::get('os_versions/json', [OSVersionController::class, 'versions'])->name('os_versions');
-        Route::get('os-types/search', [OSTypeController::class, 'search'])->name('os_types.search');
         Route::get('sections/', [SectionController::class, 'index'])->name('sections.index');
         Route::get('sections/{section}/edit', [SectionController::class, 'edit'])->name('sections.edit');
         Route::put('sections/{section}/edit', [SectionController::class, 'update'])->name('sections.update');
+
+        Route::get('settings', [SettingsController::class, 'edit'])->name('settings.edit');
+        Route::put('settings', [SettingsController::class, 'update'])->name('settings.update');
+        Route::get('generate-sitemap', [SitemapController::class, 'generateSitemap'])->name('sitemap.generate');
+
 
         Route::get('/', [AdminBaseController::class, 'index']);
         Route::resource('users', 'UserController');

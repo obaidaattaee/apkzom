@@ -27,4 +27,8 @@ class AppVersion extends Model
     {
         return $this->belongsTo(App::class, 'app_id', 'id');
     }
+
+    public function OSVersion() {
+        return $this->belongsTo(OSVersion::class , 'os_version_id' , 'id');
+    }
 }

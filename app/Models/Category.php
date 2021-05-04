@@ -45,4 +45,7 @@ class Category extends Model
         'title' => 'array',
     ];
 
+    public function apps(){
+        return $this->hasMany(App::class , 'category_id' , 'id');
+    }
 }

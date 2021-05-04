@@ -57,8 +57,16 @@ class SiteController extends Controller
                 $apps = $apps->orderBy('created_at', 'desc');
             }
         }
-        $apps = $apps->paginate(40);
-        return view('site.search')->with('apps' , $apps);
+        $apps = $apps->simplePaginate(52)->appends([
+            'ci' => $request->input('ci'),
+            'vi' => $request->input('vi'),
+            'ti' => $request->input('ti'),
+            'sort' => $request->input('sort'),
+            'title' => $request->input('title'),
+            'tag' => $request->input('tag'),
+            'vendor_name' => $request->input('vendor_name'),
+        ]);
+        return $request->wantsJson() ? $apps : view('site.search')->with('apps' , $apps);
     }
 
     public function details(App $app)

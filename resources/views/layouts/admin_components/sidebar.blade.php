@@ -96,6 +96,12 @@
                                 <p>{{ __('common.footer_management') }}</p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="{{ route('settings.edit') }}" class="nav-link @if(request()->is('admin/footers/*')) active @endif">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>{{ __('common.general_settings') }}</p>
+                            </a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item  @if(request()->is('admin/apps/*') || request()->is('admin/apps') ) menu-open @endif">

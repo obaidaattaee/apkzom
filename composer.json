@@ -17,8 +17,10 @@
         "joedixon/laravel-translation": "^1.1",
         "laravel/framework": "^6.20",
         "laravel/tinker": "^2.5",
+        "laravelium/sitemap": "6.*",
         "mcamara/laravel-localization": "^1.6",
         "santigarcor/laratrust": "^6.3",
+        "silviolleite/laravelpwa": "^2.0",
         "spatie/laravel-translatable": "4.6",
         "yajra/laravel-datatables": "^1.5",
         "yajra/laravel-datatables-oracle": "^9.17"

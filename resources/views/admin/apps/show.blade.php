@@ -3,6 +3,7 @@
 @section('page-title' , __('common.apps'). ' : ' . $app->translation('title' , app()->getLocale()))
 
 @section('tool-bar')
+
     <link rel="stylesheet" href="cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
     <div class="card-tools flex">
         <ul class="nav nav-pills ml-auto">

@@ -87,6 +87,56 @@
                             <div class="text-danger">{{ $message }}</div>
                             @enderror
                         </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.signature') }}</label>
+                            <input type="text" required name="signature" id="signature" class="form-control"
+                                   placeholder="{{ __('common.signature') }}"
+                                   value="{{ old('signature') }}">
+                            @error('signature')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.screen_dpi') }}</label>
+                            <input type="text" required name="screen_dpi" id="screen_dpi" class="form-control"
+                                   placeholder="{{ __('common.screen_dpi') }}"
+                                   value="{{ old('screen_dpi') }}">
+                            @error('screen_dpi')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.architecture') }}</label>
+                            <input type="text" required name="architecture" id="architecture" class="form-control"
+                                   placeholder="{{ __('common.architecture') }}"
+                                   value="{{ old('architecture') }}">
+                            @error('architecture')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="tags">{{ __('common.file_hash') }}</label>
+                            <input type="text" required name="file_hash" id="file_hash" class="form-control"
+                                   placeholder="{{ __('common.file_hash') }}"
+                                   value="{{ old('file_hash') }}">
+                            @error('file_hash')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="os_version_id">{{ __('common.os_version') }}</label>
+                            <select required name="os_version_id" id="os_version_id" class="form-control">
+
+                            </select>
+                            @error('os_version_id')
+                            <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        
                     </div>
                 </div>
                 <div class="card-footer">

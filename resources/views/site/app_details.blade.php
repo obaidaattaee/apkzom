@@ -1,6 +1,10 @@
 @extends('layouts.site')
-
+@section('title')
+    {{ ucwords($app->translation('title', app()->getLocale())) }}
+@endsection
 @section('content')
+
+
     <div class="container">
         <div class="col-md-8 col-sm-8">
 
@@ -20,9 +24,9 @@
                                             alt="{{ $app->translation('title', app()->getLocale()) }}" />
                                     </div>
                                     <div class="col-md-9 col-sm-8">
-                                        <h3 class="app-head">
-                                            {{ $app->translation('title', app()->getLocale())  }}
-                                        </h3>
+                                        <h1 class="app-head">
+                                            {{ $app->translation('title', app()->getLocale()) }}
+                                        </h1>
                                         <p class="des">Download APK, faster, free and saving data!</p>
                                         <div class="ratings">
                                             @component('admin.vendors.rate', ['rate' => $app->rate])
@@ -122,24 +126,31 @@
                             </h2>
                         </div>
                         <div class="panel-body">
-                            <div class="row" >
+                            <div class="row">
                                 @foreach (object_get($app, 'versions', [[]]) as $version)
-
-                                    <div class="col-md-4 col-sm-12 col-xs-12 " >
+                                @php
+                                    $version = $version->load(['app' ,'app.owner' , 'OSVersion'])
+                                @endphp
+                                    <div class="col-md-4 col-sm-12 col-xs-12 ">
                                         <div class="row" style="padding: 10px">
                                             <div class="p-panel" style="background-color: #ecebeb; border-radius: 2px">
 
-                                                <div class="col-md-12 col-sm-12 col-xs-12 clr-left" style="margin-left: 10px">
-                                                    <h4 class="p-head" >
+                                                <div class="col-md-12 col-sm-12 col-xs-12 clr-left"
+                                                    style="margin-left: 10px">
+                                                    <h2 class="p-head">
                                                         {{ $version->title }}
-                                                    </h4>
-                                                    <p class="p-text-sm extension-margin" >
+                                                        <i class="fas fa-align-justify" style="float: right;" onclick="showDetails(
+                                                                {{$version}}
+                                                            )"></i>
+                                                    </h2>
+
+                                                    <p class="p-text-sm extension-margin">
                                                         <span class="extension">
                                                             {{ $version->extension }}
                                                         </span>
                                                     </p>
                                                     <p class="p-text-sm">
-                                                        {{ $app->translation('title' , app()->getLocale()) }}
+                                                        {{ $app->translation('title', app()->getLocale()) }}
                                                     </p>
                                                     <p class="p-text-sm">
                                                         {{ $version->published_at->format('Y-m-d') }}
@@ -147,7 +158,8 @@
                                                     <p class="coming-soon">
                                                         {{ $version->size }}
                                                         <span style="float: right">
-                                                            <a href="{{route('download' , ['version' => $version->id , 'title' => str_replace(' ' , '-' , $app->translation('title' , app()->getLocale()) .' ' . $version->title)])}}">
+                                                            <a
+                                                                href="{{ route('download', ['version' => $version->id, 'title' => str_replace(' ', '-', $app->translation('title', app()->getLocale()) . ' ' . $version->title)]) }}">
                                                                 <i class="fa fa-download"></i>
                                                             </a>
                                                         </span>
@@ -169,4 +181,90 @@
 
         @endcomponent
     </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="appVersionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="exampleModalLongTitle"></h3>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="ver-info-m">
+                        <p>
+                            <strong>{{ ucwords(__('common.publish_date')) }} : </strong>
+                            <span id="versionPublishedDate"></span>
+                        </p>
+
+
+                        <p>
+                            <strong>{{ ucwords(__('common.vendor')) }} : </strong>
+                            <span id="versionVendor"></span>
+                        </p>
+
+
+                        <p>
+                            <strong>{{ ucwords(__('common.os_version')) }} :  </strong>
+                            <span id="versionOsVersion"></span>
+                        </p>
+                        <p>
+                            <strong>{{ ucwords(__('common.signature')) }} : </strong>
+                            <span id="versionSignature"></span>
+
+                        </p>
+                        <p>
+                            <strong> {{ ucwords(__('common.screen_dpi')) }} : </strong>
+                            <span id="versionScreenDpi"></span>
+                        </p>
+                        <p>
+                            <strong>{{ ucwords(__('common.architecture')) }} : </strong>
+                            <span id="versionArchitecture"></span>
+                        </p>
+
+                        <p>
+                            <strong> {{ ucwords(__('common.file_hash')) }} : </strong>
+                            <span id="versionFileHash"></span>
+                        </p>
+                        <p>
+                            <strong>{{ ucwords(__('common.size')) }} : </strong>
+                            <span id="versionSize"></span>
+                        </p>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a type="button" class="btn btn-info" id="versionLink">{{ ucwords(__('common.download')) }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        $('#appVersionModal').on('shown.bs.modal', function() {
+            $('#myInput').trigger('focus')
+        })
+
+        function showDetails(version) {
+            let route = '{{ url('download' ) }}' + '/' +version.id + '/' + version.app.title_translation + ` ( ${version.title} ) `;
+            $('#appVersionModal').modal('toggle');
+            $('#versionPublishedDate').text(version.published_at);
+            $('#versionVendor').text(version.app.owner.name);
+            $('#versionOsVersion').text(version.o_s_version.version);
+            $('#versionSignature').text(version.signature);
+            $('#versionScreenDpi').text(version.screen_dpi);
+            $('#versionArchitecture').text(version.architecture);
+            $('#versionFileHash').text(version.file_hash);
+            $('#versionSize').text(version.size);
+            $('#exampleModalLongTitle').text(version.app.title_translation + ` ( ${version.title} ) `);
+            $('#versionLink').attr( 'href' , route);
+
+        }
+
+    </script>
 @endsection
